@@ -1,0 +1,113 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '@components/layout/Breadcrumbs.astro';
+import TableOfContents from '@components/blog/TableOfContents.astro';
+import ArticleCard from '@components/blog/ArticleCard.astro';
+import CTA from '@components/ui/CTA.astro';
+import LeadForm from '@components/ui/LeadForm.astro';
+import FAQ from '@components/ui/FAQ.astro';
+import { generateArticleSchema } from '@utils/schema';
+import { siteConfig } from '@data/seo-config';
+
+interface RelatedArticle {
+  title: string;
+  description: string;
+  href: string;
+  date?: Date;
+}
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  category: string;
+  headings?: { depth: number; slug: string; text: string }[];
+  relatedArticles?: RelatedArticle[];
+  faq?: FAQItem[];
+}
+
+const { title, description, category, headings = [], relatedArticles = [], faq = [] } = Astro.props;
+
+// Breadcrumbs
+const breadcrumbs = [{ label: title, href: Astro.url.pathname }];
+
+// Schema
+const articleSchema = generateArticleSchema({
+  title,
+  description,
+  url: `${siteConfig.url}${Astro.url.pathname}`,
+  datePublished: new Date().toISOString(),
+  section: category,
+});
+
+// CTA type
+const ctaType = category.toLowerCase() as 'succession' | 'heritage' | 'donation' | 'testament' | 'droits' | 'notaire';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={Astro.url.pathname}
+  ogType="article"
+  section={category}
+  schema={articleSchema}
+>
+  <article class="py-8 md:py-12">
+    <div class="container-narrow">
+      <!-- Breadcrumbs -->
+      <Breadcrumbs items={breadcrumbs} />
+
+      <!-- Header -->
+      <header class="mb-8 text-center">
+        <span class="badge badge-primary mb-4">{category}</span>
+        <h1 class="text-balance mb-4">{title}</h1>
+        <p class="text-xl text-secondary-600 max-w-2xl mx-auto">{description}</p>
+      </header>
+
+      <!-- Table of Contents -->
+      {headings.length > 0 && <TableOfContents headings={headings} />}
+
+      <!-- Main Content -->
+      <div class="article-content">
+        <slot />
+      </div>
+
+      <!-- CTA Box -->
+      <CTA type={ctaType} />
+
+      <!-- Related Articles -->
+      {relatedArticles.length > 0 && (
+        <section class="my-12">
+          <h2 class="text-2xl md:text-3xl font-bold text-secondary-900 mb-8">
+            Articles sur {category.toLowerCase()}
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {relatedArticles.map((article) => (
+              <ArticleCard
+                title={article.title}
+                description={article.description}
+                href={article.href}
+                date={article.date}
+                category={category}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- FAQ -->
+      {faq.length > 0 && <FAQ items={faq} />}
+
+      <!-- Lead Form -->
+      <LeadForm
+        title={`Tout savoir sur ${category.toLowerCase()}`}
+        description={`Recevez notre guide complet sur ${category.toLowerCase()} directement dans votre boîte mail.`}
+        source={`pillar-${category.toLowerCase()}`}
+      />
+    </div>
+  </article>
+</BaseLayout>

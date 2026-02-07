@@ -1,0 +1,149 @@
+---
+import PillarLayout from '@layouts/PillarLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) =>
+  !data.draft && data.category === 'Testament'
+);
+const relatedArticles = allPosts
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 6)
+  .map((post) => ({
+    title: post.data.title,
+    description: post.data.description,
+    href: `/blog/${post.slug}/`,
+    date: post.data.date,
+  }));
+
+const faq = [
+  {
+    question: 'Peut-on rédiger son testament soi-même ?',
+    answer: 'Oui, c\'est le testament olographe : entièrement écrit à la main, daté et signé par le testateur. Il est gratuit mais doit être conservé en lieu sûr (dépôt chez un notaire recommandé).',
+  },
+  {
+    question: 'Peut-on modifier ou annuler son testament ?',
+    answer: 'Oui, un testament est toujours révocable. Vous pouvez le modifier à tout moment en rédigeant un nouveau testament qui annule expressément le précédent, ou en détruisant le testament existant.',
+  },
+  {
+    question: 'Le testament peut-il avantager une personne au détriment des héritiers ?',
+    answer: 'Le testament ne peut disposer que de la quotité disponible (part qui n\'est pas réservée aux héritiers réservataires). Tout legs qui empiète sur la réserve peut être réduit par les héritiers.',
+  },
+  {
+    question: 'Où conserver son testament ?',
+    answer: 'Le plus sûr est de le déposer chez un notaire qui l\'inscrira au Fichier Central des Dispositions de Dernières Volontés (FCDDV). Vous pouvez aussi le garder chez vous, mais il risque de ne pas être retrouvé.',
+  },
+];
+
+const headings = [
+  { depth: 2, slug: 'definition', text: 'Qu\'est-ce qu\'un testament ?' },
+  { depth: 2, slug: 'types', text: 'Les différents types de testament' },
+  { depth: 2, slug: 'redaction', text: 'Comment rédiger son testament' },
+  { depth: 2, slug: 'contenu', text: 'Que peut contenir un testament ?' },
+  { depth: 2, slug: 'contestation', text: 'Contester un testament' },
+];
+---
+
+<PillarLayout
+  title="Testament : Comment Rédiger ses Dernières Volontés"
+  description="Guide complet sur le testament en France : types de testament, comment le rédiger, que peut-il contenir. Organisez votre succession selon vos souhaits."
+  category="Testament"
+  headings={headings}
+  relatedArticles={relatedArticles}
+  faq={faq}
+>
+  <h2 id="definition">Qu'est-ce qu'un testament ?</h2>
+  <p>
+    Le <strong>testament</strong> est un document juridique par lequel une personne exprime ses dernières volontés concernant la transmission de ses biens après son décès. Il permet d'organiser sa succession au-delà de ce que prévoit la loi.
+  </p>
+  <p>
+    Le testament est un acte personnel et révocable : vous pouvez le modifier ou l'annuler à tout moment de votre vivant.
+  </p>
+
+  <div class="info-box">
+    <strong>Bon à savoir :</strong> Le testament ne peut porter atteinte à la réserve héréditaire. Il ne peut disposer que de la quotité disponible.
+  </div>
+
+  <h2 id="types">Les différents types de testament</h2>
+
+  <h3>Testament olographe</h3>
+  <p>
+    C'est la forme la plus simple et la plus courante. Le testament olographe doit être :
+  </p>
+  <ul>
+    <li><strong>Entièrement écrit à la main</strong> par le testateur (pas de document tapé ou imprimé)</li>
+    <li><strong>Daté</strong> (jour, mois, année)</li>
+    <li><strong>Signé</strong> par le testateur</li>
+  </ul>
+  <p>
+    Il est gratuit mais risque de ne pas être retrouvé ou d'être contesté. Le dépôt chez un notaire est fortement recommandé.
+  </p>
+
+  <h3>Testament authentique</h3>
+  <p>
+    Le testament authentique est reçu par un notaire en présence de deux témoins (ou d'un second notaire). Le testateur dicte ses volontés au notaire qui les rédige.
+  </p>
+  <p>
+    <strong>Avantages :</strong> Sécurité maximale, conservation assurée, difficile à contester.
+  </p>
+  <p>
+    <strong>Inconvénient :</strong> Coût (environ 150 € + frais de garde).
+  </p>
+
+  <h3>Testament mystique</h3>
+  <p>
+    Forme rare : le testateur remet son testament sous enveloppe fermée à un notaire, en présence de deux témoins. Le contenu reste secret jusqu'au décès.
+  </p>
+
+  <h2 id="redaction">Comment rédiger son testament</h2>
+  <p>
+    Voici les étapes pour rédiger un testament olographe valide :
+  </p>
+  <ol>
+    <li>Prenez une feuille de papier et un stylo (pas de crayon)</li>
+    <li>Écrivez entièrement à la main "Ceci est mon testament"</li>
+    <li>Datez le document (ex : "Fait à Paris, le 15 janvier 2024")</li>
+    <li>Rédigez vos volontés de manière claire et précise</li>
+    <li>Signez en bas du document</li>
+    <li>Déposez-le chez un notaire pour plus de sécurité</li>
+  </ol>
+
+  <div class="warning-box">
+    <strong>Attention :</strong> Évitez les formulations ambiguës. Identifiez clairement les bénéficiaires (nom, prénom, date de naissance, adresse) et les biens concernés.
+  </div>
+
+  <h2 id="contenu">Que peut contenir un testament ?</h2>
+  <p>
+    Le testament peut prévoir :
+  </p>
+  <ul>
+    <li>
+      <strong>Des legs</strong> : attribution de biens spécifiques à des personnes déterminées
+      <ul>
+        <li>Legs universel : toute la quotité disponible</li>
+        <li>Legs à titre universel : une quote-part de la succession</li>
+        <li>Legs particulier : un bien déterminé</li>
+      </ul>
+    </li>
+    <li><strong>La désignation d'un exécuteur testamentaire</strong> : personne chargée de veiller au respect de vos volontés</li>
+    <li><strong>La reconnaissance d'un enfant</strong> (cas particulier)</li>
+    <li><strong>Des dispositions non patrimoniales</strong> : funérailles, don d'organes, tuteur pour les enfants mineurs</li>
+  </ul>
+
+  <div class="success-box">
+    <strong>Conseil :</strong> Pour les biens immobiliers ou les situations complexes, faites appel à un notaire qui vérifiera la conformité de vos dispositions avec la loi.
+  </div>
+
+  <h2 id="contestation">Contester un testament</h2>
+  <p>
+    Un testament peut être contesté pour plusieurs motifs :
+  </p>
+  <ul>
+    <li><strong>Vice de forme</strong> : le testament ne respecte pas les conditions de validité (pas écrit à la main, pas daté, pas signé)</li>
+    <li><strong>Insanité d'esprit</strong> : le testateur n'était pas sain d'esprit au moment de la rédaction</li>
+    <li><strong>Vice du consentement</strong> : le testament a été rédigé sous la contrainte, par erreur ou suite à des manœuvres frauduleuses (captation d'héritage)</li>
+    <li><strong>Atteinte à la réserve</strong> : les dispositions dépassent la quotité disponible</li>
+  </ul>
+  <p>
+    L'action en nullité doit être intentée dans les <strong>5 ans</strong> suivant le décès ou la découverte du vice.
+  </p>
+</PillarLayout>

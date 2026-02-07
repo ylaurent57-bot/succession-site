@@ -1,0 +1,70 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import LeadForm from '@components/ui/LeadForm.astro';
+---
+
+<BaseLayout
+  title="À propos de Succession France"
+  description="Découvrez Succession France : votre guide expert sur la succession et l'héritage en France. Notre mission, notre équipe, nos valeurs."
+  canonical="/a-propos/"
+>
+  <section class="py-12 md:py-16">
+    <div class="container-narrow">
+      <header class="text-center mb-12">
+        <h1 class="mb-4">À propos de Succession France</h1>
+        <p class="text-xl text-secondary-600">
+          Votre guide expert sur la succession et l'héritage en France.
+        </p>
+      </header>
+
+      <div class="article-content">
+        <h2>Notre mission</h2>
+        <p>
+          <strong>Succession France</strong> a pour mission de rendre accessible et compréhensible le droit des successions à tous les Français. Face à la complexité des règles juridiques et fiscales, nous proposons des contenus clairs, pratiques et à jour.
+        </p>
+        <p>
+          Nous croyons que chacun devrait pouvoir comprendre ses droits et prendre des décisions éclairées concernant la transmission de son patrimoine ou la gestion d'une succession.
+        </p>
+
+        <h2>Ce que nous proposons</h2>
+        <ul>
+          <li><strong>Des guides complets</strong> sur tous les aspects de la succession : héritage, donation, testament, droits de succession, rôle du notaire</li>
+          <li><strong>Des outils gratuits</strong> pour calculer vos droits de succession et simuler le partage d'héritage</li>
+          <li><strong>Des articles actualisés</strong> qui suivent l'évolution de la législation</li>
+          <li><strong>Des conseils pratiques</strong> pour vous accompagner dans vos démarches</li>
+        </ul>
+
+        <h2>Notre expertise</h2>
+        <p>
+          Nos contenus sont rédigés par une équipe de rédacteurs spécialisés en droit patrimonial et en gestion de patrimoine. Ils sont régulièrement relus et mis à jour pour garantir leur exactitude.
+        </p>
+        <p>
+          Nous travaillons en lien avec des notaires et des avocats spécialisés pour vous offrir une information fiable et pertinente.
+        </p>
+
+        <div class="warning-box">
+          <strong>Important :</strong> Les informations présentes sur ce site sont fournies à titre informatif et ne constituent pas un conseil juridique personnalisé. Pour toute situation particulière, nous vous recommandons de consulter un notaire ou un avocat.
+        </div>
+
+        <h2>Nos valeurs</h2>
+        <ul>
+          <li><strong>Clarté</strong> : Nous vulgarisons le droit sans le dénaturer</li>
+          <li><strong>Fiabilité</strong> : Nos informations sont sourcées et vérifiées</li>
+          <li><strong>Accessibilité</strong> : Nos contenus sont gratuits et ouverts à tous</li>
+          <li><strong>Indépendance</strong> : Nos recommandations sont objectives</li>
+        </ul>
+
+        <h2>Nous contacter</h2>
+        <p>
+          Une question ? Une suggestion ? N'hésitez pas à nous écrire via notre <a href="/contact/">page de contact</a>.
+        </p>
+      </div>
+
+      <LeadForm
+        title="Restez informé"
+        description="Recevez nos derniers articles et guides sur la succession directement dans votre boîte mail."
+        source="about-page"
+      />
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,38 @@
+---
+interface TocItem {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: TocItem[];
+  title?: string;
+}
+
+const { headings, title = 'Sommaire' } = Astro.props;
+
+// Filtrer pour n'inclure que les h2 et h3
+const filteredHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{filteredHeadings.length > 0 && (
+  <nav class="toc" aria-label="Table des matières">
+    <h2 class="toc-title">{title}</h2>
+    <ol class="toc-list">
+      {filteredHeadings.map((heading) => (
+        <li class:list={[heading.depth === 3 && 'ml-4']}>
+          <a
+            href={`#${heading.slug}`}
+            class:list={[
+              'toc-link block py-1',
+              heading.depth === 2 ? 'font-medium' : 'text-sm',
+            ]}
+          >
+            {heading.text}
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+)}

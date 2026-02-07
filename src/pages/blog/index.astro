@@ -1,0 +1,68 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ArticleCard from '@components/blog/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = allPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+// Grouper par catégorie
+const categories = [...new Set(sortedPosts.map((post) => post.data.category))];
+---
+
+<BaseLayout
+  title="Blog - Articles sur la succession et l'héritage"
+  description="Tous nos articles sur la succession, l'héritage, les donations, le testament et les droits de succession. Conseils pratiques et actualités juridiques."
+  canonical="/blog/"
+>
+  <section class="py-12 md:py-16">
+    <div class="container-wide">
+      <header class="text-center mb-12">
+        <h1 class="mb-4">Blog Succession</h1>
+        <p class="text-xl text-secondary-600 max-w-2xl mx-auto">
+          Tous nos articles et conseils pour comprendre la succession, l'héritage et la transmission de patrimoine.
+        </p>
+      </header>
+
+      <!-- Filtres par catégorie -->
+      <div class="flex flex-wrap justify-center gap-2 mb-12">
+        <a
+          href="/blog/"
+          class="badge badge-primary"
+        >
+          Tous
+        </a>
+        {categories.map((category) => (
+          <a
+            href={`/blog/categorie/${category.toLowerCase()}/`}
+            class="badge badge-secondary hover:bg-secondary-200 transition-colors"
+          >
+            {category}
+          </a>
+        ))}
+      </div>
+
+      <!-- Liste des articles -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {sortedPosts.map((post, index) => (
+          <ArticleCard
+            title={post.data.title}
+            description={post.data.description}
+            href={`/blog/${post.slug}/`}
+            date={post.data.date}
+            category={post.data.category}
+            featured={index === 0}
+          />
+        ))}
+      </div>
+
+      <!-- Message si aucun article -->
+      {sortedPosts.length === 0 && (
+        <div class="text-center py-12">
+          <p class="text-secondary-600">Aucun article publié pour le moment.</p>
+          <p class="text-secondary-500 mt-2">Revenez bientôt pour découvrir nos contenus !</p>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>

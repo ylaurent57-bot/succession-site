@@ -1,0 +1,196 @@
+---
+import PillarLayout from '@layouts/PillarLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) =>
+  !data.draft && data.category === 'Notaire'
+);
+const relatedArticles = allPosts
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 6)
+  .map((post) => ({
+    title: post.data.title,
+    description: post.data.description,
+    href: `/blog/${post.slug}/`,
+    date: post.data.date,
+  }));
+
+const faq = [
+  {
+    question: 'Le notaire est-il obligatoire pour une succession ?',
+    answer: 'Le notaire est obligatoire si la succession comprend un bien immobilier ou si elle dépasse 5 000 €. Il est aussi nécessaire s\'il existe un testament ou un contrat de mariage.',
+  },
+  {
+    question: 'Comment choisir son notaire pour une succession ?',
+    answer: 'Le notaire est généralement celui du lieu du dernier domicile du défunt, mais les héritiers peuvent en choisir un autre. En cas de désaccord, chaque héritier peut avoir son propre notaire.',
+  },
+  {
+    question: 'Combien coûte un notaire pour une succession ?',
+    answer: 'Les frais de notaire comprennent des émoluments réglementés (pourcentage de l\'actif), des frais de formalités et des honoraires libres pour les conseils. Comptez en moyenne 1% à 2% de l\'actif successoral.',
+  },
+  {
+    question: 'Peut-on changer de notaire en cours de succession ?',
+    answer: 'Oui, vous pouvez changer de notaire à tout moment. Il suffit de désigner un nouveau notaire qui récupérera le dossier. Vous devrez toutefois régler les frais déjà engagés.',
+  },
+];
+
+const headings = [
+  { depth: 2, slug: 'role', text: 'Le rôle du notaire dans une succession' },
+  { depth: 2, slug: 'missions', text: 'Les missions du notaire' },
+  { depth: 2, slug: 'frais', text: 'Les frais de notaire' },
+  { depth: 2, slug: 'delais', text: 'Les délais à respecter' },
+  { depth: 2, slug: 'documents', text: 'Documents à fournir' },
+];
+---
+
+<PillarLayout
+  title="Notaire et Succession : Rôle, Frais et Délais"
+  description="Le rôle du notaire dans une succession : missions, frais, délais. Tout comprendre sur l'intervention du notaire dans le règlement d'une succession."
+  category="Notaire"
+  headings={headings}
+  relatedArticles={relatedArticles}
+  faq={faq}
+>
+  <h2 id="role">Le rôle du notaire dans une succession</h2>
+  <p>
+    Le <strong>notaire</strong> est un officier public qui joue un rôle central dans le règlement d'une succession. Il garantit la sécurité juridique des opérations et conseille les héritiers tout au long de la procédure.
+  </p>
+  <p>
+    Son intervention est obligatoire dès lors que la succession comprend un bien immobilier, quel que soit son montant. Il est également indispensable en présence d'un testament ou d'un contrat de mariage.
+  </p>
+
+  <div class="info-box">
+    <strong>Bon à savoir :</strong> Le notaire est un professionnel impartial. Il ne défend pas les intérêts d'un héritier en particulier mais veille à l'équité du partage et au respect de la loi.
+  </div>
+
+  <h2 id="missions">Les missions du notaire</h2>
+  <p>
+    Le notaire accomplit de nombreuses démarches pour régler la succession :
+  </p>
+
+  <h3>1. Identification des héritiers</h3>
+  <ul>
+    <li>Recherche d'un éventuel testament (consultation du FCDDV)</li>
+    <li>Établissement de la généalogie successorale</li>
+    <li>Rédaction de l'<strong>acte de notoriété</strong> qui identifie officiellement les héritiers</li>
+  </ul>
+
+  <h3>2. Inventaire du patrimoine</h3>
+  <ul>
+    <li>Recensement de tous les biens du défunt (immobilier, comptes bancaires, placements...)</li>
+    <li>Évaluation des biens immobiliers</li>
+    <li>Identification des dettes et charges</li>
+  </ul>
+
+  <h3>3. Gestion administrative</h3>
+  <ul>
+    <li>Déblocage des comptes bancaires</li>
+    <li>Attestation de propriété immobilière</li>
+    <li>Rédaction et dépôt de la <strong>déclaration de succession</strong> au fisc</li>
+    <li>Règlement des dettes du défunt</li>
+  </ul>
+
+  <h3>4. Organisation du partage</h3>
+  <ul>
+    <li>Proposition de partage aux héritiers</li>
+    <li>Rédaction de l'acte de partage si accord</li>
+    <li>En cas de désaccord, conseil sur les options (médiation, partage judiciaire)</li>
+  </ul>
+
+  <h2 id="frais">Les frais de notaire</h2>
+  <p>
+    Les frais de notaire dans une succession se composent de trois éléments :
+  </p>
+
+  <h3>Émoluments proportionnels (réglementés)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Tranche de l'actif brut</th>
+        <th>Taux</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>De 0 à 6 500 €</td>
+        <td>1,578%</td>
+      </tr>
+      <tr>
+        <td>De 6 500 € à 17 000 €</td>
+        <td>0,868%</td>
+      </tr>
+      <tr>
+        <td>De 17 000 € à 60 000 €</td>
+        <td>0,592%</td>
+      </tr>
+      <tr>
+        <td>Au-delà de 60 000 €</td>
+        <td>0,434%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Émoluments fixes (réglementés)</h3>
+  <ul>
+    <li>Acte de notoriété : environ 57 €</li>
+    <li>Attestation de propriété immobilière : environ 107 €</li>
+    <li>Déclaration de succession : variable selon complexité</li>
+  </ul>
+
+  <h3>Honoraires libres</h3>
+  <p>
+    Pour les conseils, négociations ou missions complexes, le notaire peut facturer des honoraires libres, en accord avec les héritiers.
+  </p>
+
+  <div class="warning-box">
+    <strong>Attention :</strong> Les frais de notaire sont à distinguer des droits de succession (impôt). Les deux s'additionnent.
+  </div>
+
+  <h2 id="delais">Les délais à respecter</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Étape</th>
+        <th>Délai indicatif</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Acte de notoriété</td>
+        <td>1 à 2 mois</td>
+      </tr>
+      <tr>
+        <td>Inventaire du patrimoine</td>
+        <td>1 à 3 mois</td>
+      </tr>
+      <tr>
+        <td>Déclaration de succession</td>
+        <td>6 mois maximum (obligatoire)</td>
+      </tr>
+      <tr>
+        <td>Partage (amiable)</td>
+        <td>6 mois à 1 an</td>
+      </tr>
+      <tr>
+        <td>Règlement complet</td>
+        <td>6 mois à 2 ans selon complexité</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="documents">Documents à fournir au notaire</h2>
+  <p>
+    Pour ouvrir la succession, le notaire aura besoin des documents suivants :
+  </p>
+  <ul>
+    <li><strong>Documents d'état civil :</strong> Acte de décès, livret de famille, acte de naissance du défunt</li>
+    <li><strong>Documents patrimoniaux :</strong> Titres de propriété, relevés bancaires, contrats d'assurance-vie</li>
+    <li><strong>Documents juridiques :</strong> Testament, contrat de mariage, jugement de divorce</li>
+    <li><strong>Identité des héritiers :</strong> Pièces d'identité, justificatifs de domicile</li>
+    <li><strong>Dettes :</strong> Factures impayées, prêts en cours, avis d'imposition</li>
+  </ul>
+
+  <div class="success-box">
+    <strong>Conseil :</strong> Rassemblez tous les documents avant le premier rendez-vous avec le notaire. Cela accélérera considérablement la procédure.
+  </div>
+</PillarLayout>

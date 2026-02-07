@@ -1,0 +1,167 @@
+---
+import PillarLayout from '@layouts/PillarLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Articles liés à la succession
+const allPosts = await getCollection('blog', ({ data }) =>
+  !data.draft && data.category === 'Succession'
+);
+const relatedArticles = allPosts
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 6)
+  .map((post) => ({
+    title: post.data.title,
+    description: post.data.description,
+    href: `/blog/${post.slug}/`,
+    date: post.data.date,
+  }));
+
+const faq = [
+  {
+    question: 'Quand commence une succession ?',
+    answer: 'Une succession s\'ouvre automatiquement au jour du décès. C\'est à partir de cette date que les héritiers deviennent propriétaires des biens du défunt, sous réserve d\'accepter ou de renoncer à la succession.',
+  },
+  {
+    question: 'Qui peut ouvrir une succession ?',
+    answer: 'Tout héritier ou légataire peut demander l\'ouverture de la succession. En pratique, c\'est généralement le conjoint survivant ou les enfants qui contactent un notaire pour lancer les démarches.',
+  },
+  {
+    question: 'Quel est le délai pour régler une succession ?',
+    answer: 'La déclaration de succession doit être déposée dans les 6 mois suivant le décès (12 mois si le décès a eu lieu à l\'étranger). Le règlement complet de la succession prend généralement entre 6 mois et 1 an.',
+  },
+  {
+    question: 'Peut-on refuser une succession ?',
+    answer: 'Oui, chaque héritier peut renoncer à la succession. Cette renonciation doit être faite auprès du tribunal judiciaire. Elle est souvent conseillée lorsque les dettes du défunt dépassent l\'actif.',
+  },
+  {
+    question: 'Que faire en cas de blocage de succession ?',
+    answer: 'En cas de blocage (héritier qui ne répond pas, désaccord sur le partage), il est possible de saisir le tribunal pour débloquer la situation. Un médiateur peut également intervenir avant d\'aller au contentieux.',
+  },
+];
+
+const headings = [
+  { depth: 2, slug: 'definition', text: 'Qu\'est-ce qu\'une succession ?' },
+  { depth: 2, slug: 'ouverture', text: 'Ouverture de la succession' },
+  { depth: 2, slug: 'heritiers', text: 'Qui sont les héritiers ?' },
+  { depth: 2, slug: 'etapes', text: 'Les étapes d\'une succession' },
+  { depth: 2, slug: 'delais', text: 'Délais et obligations' },
+  { depth: 2, slug: 'options', text: 'Accepter ou renoncer' },
+];
+---
+
+<PillarLayout
+  title="Succession en France : Guide Complet 2024"
+  description="Tout savoir sur la succession en France : ouverture, délais, héritiers, notaire. Guide complet et conseils pratiques pour gérer une succession."
+  category="Succession"
+  headings={headings}
+  relatedArticles={relatedArticles}
+  faq={faq}
+>
+  <h2 id="definition">Qu'est-ce qu'une succession ?</h2>
+  <p>
+    La <strong>succession</strong> est le processus juridique par lequel le patrimoine d'une personne décédée est transmis à ses héritiers. Elle comprend l'ensemble des biens, droits et obligations du défunt.
+  </p>
+  <p>
+    En France, la succession est encadrée par le Code civil qui définit les règles de dévolution (qui hérite), de partage (comment répartir) et de fiscalité (droits de succession).
+  </p>
+
+  <div class="info-box">
+    <strong>Bon à savoir :</strong> Une succession peut être <em>testamentaire</em> (le défunt a laissé un testament) ou <em>légale</em> (c'est la loi qui détermine les héritiers).
+  </div>
+
+  <h2 id="ouverture">Ouverture de la succession</h2>
+  <p>
+    La succession s'ouvre automatiquement au moment du décès, au dernier domicile du défunt. C'est ce lieu qui détermine le notaire compétent et le tribunal en cas de litige.
+  </p>
+  <p>
+    <strong>Les premières démarches à effectuer :</strong>
+  </p>
+  <ul>
+    <li>Faire constater le décès par un médecin</li>
+    <li>Déclarer le décès à la mairie dans les 24 heures</li>
+    <li>Contacter un notaire pour ouvrir la succession</li>
+    <li>Rechercher un éventuel testament</li>
+    <li>Identifier tous les héritiers</li>
+  </ul>
+
+  <h2 id="heritiers">Qui sont les héritiers ?</h2>
+  <p>
+    En l'absence de testament, la loi désigne les héritiers selon un ordre de priorité :
+  </p>
+  <ol>
+    <li><strong>Les descendants</strong> (enfants, petits-enfants) - héritiers réservataires</li>
+    <li><strong>Le conjoint survivant</strong> - droits variables selon la présence d'enfants</li>
+    <li><strong>Les ascendants</strong> (parents) et collatéraux privilégiés (frères, sœurs)</li>
+    <li><strong>Les collatéraux ordinaires</strong> (oncles, tantes, cousins) jusqu'au 6e degré</li>
+  </ol>
+
+  <div class="warning-box">
+    <strong>Attention :</strong> Le partenaire de PACS et le concubin ne sont pas héritiers légaux. Ils doivent être désignés par testament pour hériter.
+  </div>
+
+  <h2 id="etapes">Les étapes d'une succession</h2>
+  <p>
+    Le règlement d'une succession suit généralement ces étapes :
+  </p>
+  <ol>
+    <li><strong>Identification des héritiers</strong> - Établissement de l'acte de notoriété</li>
+    <li><strong>Inventaire du patrimoine</strong> - Recensement de l'actif et du passif</li>
+    <li><strong>Option successorale</strong> - Acceptation ou renonciation par chaque héritier</li>
+    <li><strong>Règlement des dettes</strong> - Paiement des créanciers du défunt</li>
+    <li><strong>Déclaration fiscale</strong> - Dépôt de la déclaration de succession</li>
+    <li><strong>Partage</strong> - Répartition des biens entre héritiers</li>
+  </ol>
+
+  <h2 id="delais">Délais et obligations</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Démarche</th>
+        <th>Délai</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Déclaration de décès en mairie</td>
+        <td>24 heures</td>
+      </tr>
+      <tr>
+        <td>Déclaration de succession aux impôts</td>
+        <td>6 mois (12 mois si décès à l'étranger)</td>
+      </tr>
+      <tr>
+        <td>Paiement des droits de succession</td>
+        <td>6 mois (possibilité de paiement fractionné)</td>
+      </tr>
+      <tr>
+        <td>Option successorale (accepter/renoncer)</td>
+        <td>4 mois à 10 ans selon les cas</td>
+      </tr>
+      <tr>
+        <td>Action en réduction (atteinte à la réserve)</td>
+        <td>5 ans</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="options">Accepter ou renoncer à la succession</h2>
+  <p>
+    Chaque héritier dispose de trois options :
+  </p>
+  <ul>
+    <li>
+      <strong>Acceptation pure et simple</strong> : L'héritier reçoit sa part d'héritage mais devient responsable des dettes, même au-delà de la valeur des biens reçus.
+    </li>
+    <li>
+      <strong>Acceptation à concurrence de l'actif net</strong> : L'héritier n'est responsable des dettes qu'à hauteur des biens reçus. Cette option nécessite un inventaire et des formalités spécifiques.
+    </li>
+    <li>
+      <strong>Renonciation</strong> : L'héritier refuse la succession. Il ne reçoit rien mais n'est pas non plus tenu des dettes.
+    </li>
+  </ul>
+
+  <div class="success-box">
+    <strong>Conseil :</strong> Avant d'accepter une succession, renseignez-vous sur les éventuelles dettes du défunt. En cas de doute, l'acceptation à concurrence de l'actif net vous protège.
+  </div>
+</PillarLayout>

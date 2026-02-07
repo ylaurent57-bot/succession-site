@@ -1,0 +1,131 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '@components/layout/Breadcrumbs.astro';
+import TableOfContents from '@components/blog/TableOfContents.astro';
+import CTA from '@components/ui/CTA.astro';
+import LeadForm from '@components/ui/LeadForm.astro';
+import AffiliateBox from '@components/monetization/AffiliateBox.astro';
+import { generateArticleSchema } from '@utils/schema';
+import { formatDateFR, estimateReadingTime } from '@utils/seo';
+import { siteConfig } from '@data/seo-config';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    date: Date;
+    dateModified?: Date;
+    author?: string;
+    category?: string;
+    tags?: string[];
+    image?: string;
+  };
+  headings: { depth: number; slug: string; text: string }[];
+  rawContent?: () => string;
+}
+
+const { frontmatter, headings, rawContent } = Astro.props;
+
+const readingTime = rawContent ? estimateReadingTime(rawContent()) : 5;
+
+// Breadcrumbs
+const breadcrumbs = [
+  { label: 'Blog', href: '/blog/' },
+];
+if (frontmatter.category) {
+  breadcrumbs.push({ label: frontmatter.category, href: `/blog/${frontmatter.category.toLowerCase()}/` });
+}
+breadcrumbs.push({ label: frontmatter.title, href: Astro.url.pathname });
+
+// Schema
+const articleSchema = generateArticleSchema({
+  title: frontmatter.title,
+  description: frontmatter.description,
+  url: `${siteConfig.url}${Astro.url.pathname}`,
+  image: frontmatter.image,
+  datePublished: frontmatter.date.toISOString(),
+  dateModified: frontmatter.dateModified?.toISOString(),
+  author: frontmatter.author,
+  section: frontmatter.category,
+});
+
+// CTA type basé sur la catégorie
+const ctaType = frontmatter.category?.toLowerCase() as 'succession' | 'heritage' | 'donation' | 'testament' | 'droits' | 'notaire' || 'succession';
+---
+
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  canonical={Astro.url.pathname}
+  ogType="article"
+  publishedTime={frontmatter.date.toISOString()}
+  modifiedTime={frontmatter.dateModified?.toISOString()}
+  author={frontmatter.author}
+  section={frontmatter.category}
+  tags={frontmatter.tags}
+  ogImage={frontmatter.image}
+  schema={articleSchema}
+>
+  <article class="py-8 md:py-12">
+    <div class="container-narrow">
+      <!-- Breadcrumbs -->
+      <Breadcrumbs items={breadcrumbs} />
+
+      <!-- Header -->
+      <header class="mb-8">
+        {frontmatter.category && (
+          <span class="badge badge-primary mb-4">{frontmatter.category}</span>
+        )}
+
+        <h1 class="text-balance mb-4">{frontmatter.title}</h1>
+
+        <div class="flex flex-wrap items-center gap-4 text-secondary-600">
+          <time datetime={frontmatter.date.toISOString()}>
+            {formatDateFR(frontmatter.date)}
+          </time>
+          <span class="text-secondary-300">|</span>
+          <span>{readingTime} min de lecture</span>
+          {frontmatter.author && (
+            <>
+              <span class="text-secondary-300">|</span>
+              <span>Par {frontmatter.author}</span>
+            </>
+          )}
+        </div>
+      </header>
+
+      <!-- Table of Contents -->
+      <TableOfContents headings={headings} />
+
+      <!-- Content -->
+      <div class="article-content">
+        <slot />
+      </div>
+
+      <!-- CTA Box -->
+      <CTA type={ctaType} />
+
+      <!-- Tags -->
+      {frontmatter.tags && frontmatter.tags.length > 0 && (
+        <div class="mt-8 pt-6 border-t border-secondary-200">
+          <div class="flex flex-wrap gap-2">
+            {frontmatter.tags.map((tag) => (
+              <a
+                href={`/blog/tag/${tag.toLowerCase()}/`}
+                class="badge badge-secondary hover:bg-secondary-200 transition-colors"
+              >
+                #{tag}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- Lead Form -->
+      <LeadForm source={`article-${Astro.url.pathname}`} />
+
+      <!-- Affiliate Recommendations -->
+      <AffiliateBox showFeatured variant="card" />
+    </div>
+  </article>
+</BaseLayout>

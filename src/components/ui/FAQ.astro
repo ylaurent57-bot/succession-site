@@ -1,0 +1,53 @@
+---
+import { generateFAQSchema } from '@utils/schema';
+import SchemaOrg from '@components/seo/SchemaOrg.astro';
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  items: FAQItem[];
+  title?: string;
+}
+
+const { items, title = 'Questions fréquentes' } = Astro.props;
+
+const schema = generateFAQSchema({ questions: items });
+---
+
+<SchemaOrg schema={schema} />
+
+<section class="my-12">
+  <h2 class="text-2xl md:text-3xl font-bold text-secondary-900 mb-8">{title}</h2>
+
+  <div class="space-y-0 divide-y divide-secondary-200">
+    {items.map((item, index) => (
+      <details class="group py-6" id={`faq-${index}`}>
+        <summary class="flex items-center justify-between cursor-pointer list-none">
+          <h3 class="text-lg font-semibold text-secondary-900 pr-4">{item.question}</h3>
+          <span class="flex-shrink-0 ml-4">
+            <svg
+              class="w-5 h-5 text-secondary-500 group-open:rotate-180 transition-transform"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </span>
+        </summary>
+        <div class="mt-4 text-secondary-700 leading-relaxed">
+          <Fragment set:html={item.answer} />
+        </div>
+      </details>
+    ))}
+  </div>
+</section>
+
+<style>
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

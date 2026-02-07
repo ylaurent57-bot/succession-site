@@ -1,0 +1,58 @@
+---
+import Navigation from './Navigation.astro';
+import { siteConfig } from '@data/seo-config';
+---
+
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-secondary-100">
+  <div class="container-wide">
+    <div class="flex items-center justify-between h-16 md:h-20">
+      <!-- Logo -->
+      <a href="/" class="flex items-center space-x-2.5 text-secondary-800 hover:text-primary-700 transition-colors">
+        <svg class="w-8 h-8 text-primary-700" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L4 7v2h16V7L12 2z" fill="currentColor" opacity="0.15"/>
+          <path d="M4 9v11h16V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 2L4 7h16L12 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M7 13h2v4H7zM11 13h2v4h-2zM15 13h2v4h-2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 20h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div class="hidden sm:flex flex-col leading-tight">
+          <span class="font-serif font-bold text-base tracking-tight">{siteConfig.name}</span>
+          <span class="text-[10px] text-secondary-500 tracking-widest uppercase">Informations & Simulateurs</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden lg:block">
+        <Navigation />
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button
+        type="button"
+        class="lg:hidden p-2 text-secondary-600 hover:text-primary-600 transition-colors"
+        aria-label="Menu"
+        id="mobile-menu-button"
+      >
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation -->
+  <div class="lg:hidden hidden" id="mobile-menu">
+    <nav class="container-wide py-4 border-t border-secondary-100">
+      <Navigation mobile />
+    </nav>
+  </div>
+</header>
+
+<script>
+  const button = document.getElementById('mobile-menu-button');
+  const menu = document.getElementById('mobile-menu');
+
+  button?.addEventListener('click', () => {
+    menu?.classList.toggle('hidden');
+  });
+</script>

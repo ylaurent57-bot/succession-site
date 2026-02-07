@@ -1,0 +1,78 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Outils gratuits - Calculateurs succession et héritage"
+  description="Outils gratuits pour calculer vos droits de succession, simuler le partage d'héritage. Estimez facilement la fiscalité de votre succession."
+  canonical="/outils/"
+>
+  <section class="py-12 md:py-16">
+    <div class="container-narrow">
+      <header class="text-center mb-12">
+        <h1 class="mb-4">Outils gratuits</h1>
+        <p class="text-xl text-secondary-600">
+          Simulez et calculez votre succession en quelques clics.
+        </p>
+      </header>
+
+      <div class="grid gap-8">
+        <!-- Calculateur droits de succession -->
+        <a href="/outils/calculateur-droits-succession/" class="card-highlight group block">
+          <div class="flex items-start gap-6">
+            <div class="w-16 h-16 bg-primary-200 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-8 h-8 text-primary-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h2 class="text-2xl font-bold text-secondary-900 group-hover:text-primary-600 transition-colors mb-2">
+                Calculateur de droits de succession
+              </h2>
+              <p class="text-secondary-600 mb-4">
+                Estimez le montant des droits de succession à payer selon votre lien de parenté avec le défunt et la valeur de votre part d'héritage.
+              </p>
+              <ul class="text-sm text-secondary-500 space-y-1">
+                <li>Calcul selon le barème fiscal en vigueur</li>
+                <li>Prise en compte des abattements</li>
+                <li>Résultat instantané et gratuit</li>
+              </ul>
+            </div>
+          </div>
+        </a>
+
+        <!-- Simulateur héritage -->
+        <a href="/outils/simulateur-heritage/" class="card-highlight group block">
+          <div class="flex items-start gap-6">
+            <div class="w-16 h-16 bg-primary-200 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-8 h-8 text-primary-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h2 class="text-2xl font-bold text-secondary-900 group-hover:text-primary-600 transition-colors mb-2">
+                Simulateur de partage d'héritage
+              </h2>
+              <p class="text-secondary-600 mb-4">
+                Calculez la répartition de l'héritage entre les différents héritiers selon la composition familiale et les règles légales.
+              </p>
+              <ul class="text-sm text-secondary-500 space-y-1">
+                <li>Part du conjoint survivant</li>
+                <li>Répartition entre enfants</li>
+                <li>Réserve héréditaire et quotité disponible</li>
+              </ul>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="mt-12 p-6 bg-secondary-50 rounded-xl">
+        <p class="text-sm text-secondary-600">
+          <strong>Avertissement :</strong> Ces outils fournissent des estimations à titre indicatif. Ils ne remplacent pas les conseils d'un notaire ou d'un conseiller en gestion de patrimoine. Pour une situation précise, consultez un professionnel.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

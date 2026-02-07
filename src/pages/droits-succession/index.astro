@@ -1,0 +1,211 @@
+---
+import PillarLayout from '@layouts/PillarLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) =>
+  !data.draft && data.category === 'Droits'
+);
+const relatedArticles = allPosts
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 6)
+  .map((post) => ({
+    title: post.data.title,
+    description: post.data.description,
+    href: `/blog/${post.slug}/`,
+    date: post.data.date,
+  }));
+
+const faq = [
+  {
+    question: 'Qui est exonéré de droits de succession ?',
+    answer: 'Le conjoint survivant et le partenaire de PACS sont totalement exonérés de droits de succession. Les frères et sœurs peuvent l\'être sous certaines conditions (plus de 50 ans ou invalides, avoir vécu avec le défunt pendant 5 ans).',
+  },
+  {
+    question: 'Comment payer les droits de succession si je n\'ai pas les liquidités ?',
+    answer: 'Vous pouvez demander un paiement fractionné (sur 1 à 3 ans) ou différé (si vous héritez de la nue-propriété). Des intérêts s\'appliquent. Il est aussi possible de payer en biens (dation en paiement) dans certains cas.',
+  },
+  {
+    question: 'Les assurances-vie sont-elles soumises aux droits de succession ?',
+    answer: 'Les capitaux versés au bénéficiaire sont hors succession jusqu\'à 152 500 € par bénéficiaire (pour les primes versées avant 70 ans). Au-delà, un prélèvement de 20% puis 31,25% s\'applique.',
+  },
+  {
+    question: 'Comment réduire les droits de succession ?',
+    answer: 'Plusieurs stratégies légales existent : donations anticipées (abattements renouvelés tous les 15 ans), assurance-vie, démembrement de propriété, pacte Dutreil pour les entreprises.',
+  },
+];
+
+const headings = [
+  { depth: 2, slug: 'definition', text: 'Que sont les droits de succession ?' },
+  { depth: 2, slug: 'calcul', text: 'Comment sont-ils calculés ?' },
+  { depth: 2, slug: 'abattements', text: 'Les abattements applicables' },
+  { depth: 2, slug: 'bareme', text: 'Barème des droits de succession' },
+  { depth: 2, slug: 'exonerations', text: 'Exonérations et réductions' },
+  { depth: 2, slug: 'paiement', text: 'Payer les droits de succession' },
+];
+---
+
+<PillarLayout
+  title="Droits de Succession : Calcul, Barème et Abattements 2024"
+  description="Tout savoir sur les droits de succession en France : calcul, barème fiscal, abattements par héritier. Guide complet pour comprendre et optimiser la fiscalité successorale."
+  category="Droits"
+  headings={headings}
+  relatedArticles={relatedArticles}
+  faq={faq}
+>
+  <h2 id="definition">Que sont les droits de succession ?</h2>
+  <p>
+    Les <strong>droits de succession</strong> sont un impôt prélevé par l'État sur la transmission du patrimoine d'une personne décédée à ses héritiers. Ils sont calculés sur la valeur des biens reçus par chaque héritier, après application d'abattements.
+  </p>
+  <p>
+    Le montant des droits varie considérablement selon le lien de parenté entre le défunt et l'héritier : plus le lien est proche, plus les abattements sont élevés et les taux faibles.
+  </p>
+
+  <h2 id="calcul">Comment sont-ils calculés ?</h2>
+  <p>
+    Le calcul des droits de succession suit ces étapes :
+  </p>
+  <ol>
+    <li><strong>Évaluation de l'actif brut</strong> : Valeur de tous les biens du défunt</li>
+    <li><strong>Déduction du passif</strong> : Dettes, frais funéraires (jusqu'à 1 500 €)</li>
+    <li><strong>Détermination de l'actif net</strong> : Actif brut - Passif</li>
+    <li><strong>Répartition entre héritiers</strong> : Selon la loi ou le testament</li>
+    <li><strong>Application des abattements</strong> : Selon le lien de parenté</li>
+    <li><strong>Application du barème</strong> : Taux progressif sur la part taxable</li>
+  </ol>
+
+  <div class="info-box">
+    <strong>Exemple :</strong> Un enfant hérite de 200 000 €. Après abattement de 100 000 €, la part taxable est de 100 000 €. Les droits seront d'environ 18 194 € (barème progressif).
+  </div>
+
+  <h2 id="abattements">Les abattements applicables</h2>
+  <p>
+    Chaque héritier bénéficie d'un abattement sur sa part, selon son lien avec le défunt :
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Héritier</th>
+        <th>Abattement</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Époux ou partenaire de PACS</td>
+        <td>Exonération totale</td>
+      </tr>
+      <tr>
+        <td>Enfant (ou ascendant)</td>
+        <td>100 000 €</td>
+      </tr>
+      <tr>
+        <td>Petit-enfant</td>
+        <td>1 594 € (sauf représentation)</td>
+      </tr>
+      <tr>
+        <td>Frère ou sœur</td>
+        <td>15 932 €</td>
+      </tr>
+      <tr>
+        <td>Neveu ou nièce</td>
+        <td>7 967 €</td>
+      </tr>
+      <tr>
+        <td>Personne handicapée</td>
+        <td>159 325 € (cumulable)</td>
+      </tr>
+      <tr>
+        <td>Autre héritier</td>
+        <td>1 594 €</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="bareme">Barème des droits de succession</h2>
+
+  <h3>En ligne directe (enfants, parents)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Part taxable après abattement</th>
+        <th>Taux</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Jusqu'à 8 072 €</td>
+        <td>5%</td>
+      </tr>
+      <tr>
+        <td>De 8 072 € à 12 109 €</td>
+        <td>10%</td>
+      </tr>
+      <tr>
+        <td>De 12 109 € à 15 932 €</td>
+        <td>15%</td>
+      </tr>
+      <tr>
+        <td>De 15 932 € à 552 324 €</td>
+        <td>20%</td>
+      </tr>
+      <tr>
+        <td>De 552 324 € à 902 838 €</td>
+        <td>30%</td>
+      </tr>
+      <tr>
+        <td>De 902 838 € à 1 805 677 €</td>
+        <td>40%</td>
+      </tr>
+      <tr>
+        <td>Au-delà de 1 805 677 €</td>
+        <td>45%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Entre frères et sœurs</h3>
+  <ul>
+    <li>Jusqu'à 24 430 € : <strong>35%</strong></li>
+    <li>Au-delà : <strong>45%</strong></li>
+  </ul>
+
+  <h3>Autres héritiers</h3>
+  <ul>
+    <li>Parents jusqu'au 4e degré : <strong>55%</strong></li>
+    <li>Parents au-delà du 4e degré ou non-parents : <strong>60%</strong></li>
+  </ul>
+
+  <div class="warning-box">
+    <strong>Attention :</strong> Sans lien de parenté, les droits peuvent atteindre 60% de la valeur héritée. C'est pourquoi les stratégies de transmission (donation, assurance-vie) sont essentielles.
+  </div>
+
+  <h2 id="exonerations">Exonérations et réductions</h2>
+  <p>
+    Certaines transmissions bénéficient d'exonérations totales ou partielles :
+  </p>
+  <ul>
+    <li><strong>Conjoint et partenaire de PACS</strong> : Exonération totale</li>
+    <li><strong>Frères et sœurs</strong> : Exonération possible si plus de 50 ans ou invalides, vivant avec le défunt depuis 5 ans</li>
+    <li><strong>Entreprises (Pacte Dutreil)</strong> : Exonération de 75% de la valeur</li>
+    <li><strong>Monuments historiques</strong> : Exonération sous conditions</li>
+    <li><strong>Bois et forêts</strong> : Exonération de 75%</li>
+    <li><strong>Victimes de guerre ou terrorisme</strong> : Exonération totale</li>
+  </ul>
+
+  <h2 id="paiement">Payer les droits de succession</h2>
+  <p>
+    Les droits de succession doivent être payés lors du dépôt de la déclaration de succession, soit dans les <strong>6 mois</strong> suivant le décès.
+  </p>
+  <p>
+    Si vous ne disposez pas des liquidités suffisantes, vous pouvez demander :
+  </p>
+  <ul>
+    <li><strong>Paiement fractionné</strong> : Échelonnement sur 1 à 3 ans (avec intérêts)</li>
+    <li><strong>Paiement différé</strong> : Si vous héritez de la nue-propriété, paiement reporté au décès de l'usufruitier</li>
+    <li><strong>Dation en paiement</strong> : Payer avec des œuvres d'art, immeubles ou titres (sur agrément)</li>
+  </ul>
+
+  <div class="success-box">
+    <strong>Conseil :</strong> Anticipez les droits de succession en souscrivant une assurance-vie dont le capital servira à les régler, évitant ainsi la vente forcée de biens.
+  </div>
+</PillarLayout>

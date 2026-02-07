@@ -1,0 +1,328 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/layout/Breadcrumbs.astro';
+import FAQ from '@components/ui/FAQ.astro';
+import CTA from '@components/ui/CTA.astro';
+
+const breadcrumbs = [
+  { label: 'Outils', href: '/outils/' },
+  { label: 'Simulateur héritage', href: '/outils/simulateur-heritage/' },
+];
+
+const faq = [
+  {
+    question: 'Comment est réparti l\'héritage entre le conjoint et les enfants ?',
+    answer: 'En présence d\'enfants communs, le conjoint peut choisir entre l\'usufruit de toute la succession ou 1/4 en pleine propriété. Les enfants se partagent le reste (ou la nue-propriété) à parts égales.',
+  },
+  {
+    question: 'Qu\'est-ce que la réserve héréditaire ?',
+    answer: 'La réserve héréditaire est la part de l\'héritage obligatoirement réservée aux enfants. Elle varie de 1/2 (1 enfant) à 3/4 (3 enfants ou plus) de la succession.',
+  },
+  {
+    question: 'Le concubin ou partenaire de PACS hérite-t-il automatiquement ?',
+    answer: 'Non, contrairement au conjoint marié, le partenaire de PACS et le concubin n\'ont aucun droit successoral légal. Ils doivent être désignés par testament pour hériter.',
+  },
+];
+---
+
+<BaseLayout
+  title="Simulateur de partage d'héritage gratuit"
+  description="Simulez gratuitement la répartition de l'héritage entre héritiers. Calculez la part du conjoint, des enfants selon les règles légales françaises."
+  canonical="/outils/simulateur-heritage/"
+>
+  <section class="py-12 md:py-16">
+    <div class="container-narrow">
+      <Breadcrumbs items={breadcrumbs} />
+
+      <header class="text-center mb-12">
+        <h1 class="mb-4">Simulateur de partage d'héritage</h1>
+        <p class="text-xl text-secondary-600">
+          Calculez la répartition de l'héritage selon la situation familiale.
+        </p>
+      </header>
+
+      <!-- Simulateur -->
+      <div class="card mb-12">
+        <form id="simulator-form" class="space-y-6">
+          <!-- Montant de la succession -->
+          <div>
+            <label for="estate" class="block text-sm font-medium text-secondary-700 mb-2">
+              Montant total de la succession (en €)
+            </label>
+            <input
+              type="number"
+              id="estate"
+              name="estate"
+              min="0"
+              step="1000"
+              placeholder="Ex : 300000"
+              class="w-full px-4 py-3 rounded-lg border border-secondary-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none"
+            />
+          </div>
+
+          <!-- Conjoint -->
+          <div>
+            <label for="spouse" class="block text-sm font-medium text-secondary-700 mb-2">
+              Situation matrimoniale du défunt
+            </label>
+            <select
+              id="spouse"
+              name="spouse"
+              class="w-full px-4 py-3 rounded-lg border border-secondary-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none"
+            >
+              <option value="none">Pas de conjoint / Veuf / Divorcé</option>
+              <option value="married">Marié(e)</option>
+              <option value="pacs">Pacsé(e)</option>
+            </select>
+          </div>
+
+          <!-- Option conjoint -->
+          <div id="spouse-option-container" class="hidden">
+            <label for="spouse-option" class="block text-sm font-medium text-secondary-700 mb-2">
+              Choix du conjoint survivant
+            </label>
+            <select
+              id="spouse-option"
+              name="spouse-option"
+              class="w-full px-4 py-3 rounded-lg border border-secondary-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none"
+            >
+              <option value="usufruit">Usufruit de toute la succession</option>
+              <option value="quarter">1/4 en pleine propriété</option>
+            </select>
+          </div>
+
+          <!-- Nombre d'enfants -->
+          <div>
+            <label for="children" class="block text-sm font-medium text-secondary-700 mb-2">
+              Nombre d'enfants
+            </label>
+            <input
+              type="number"
+              id="children"
+              name="children"
+              min="0"
+              max="20"
+              value="0"
+              class="w-full px-4 py-3 rounded-lg border border-secondary-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none"
+            />
+          </div>
+
+          <!-- Enfants d'un autre lit -->
+          <div id="other-children-container" class="hidden">
+            <div class="flex items-center gap-3">
+              <input
+                type="checkbox"
+                id="other-children"
+                name="other-children"
+                class="w-5 h-5 text-primary-600 border-secondary-300 rounded focus:ring-primary-500"
+              />
+              <label for="other-children" class="text-sm text-secondary-700">
+                Le défunt avait des enfants d'une autre union
+              </label>
+            </div>
+          </div>
+
+          <!-- Bouton simuler -->
+          <button type="submit" class="btn-primary w-full">
+            Simuler le partage
+          </button>
+        </form>
+
+        <!-- Résultats -->
+        <div id="results" class="hidden mt-8 pt-8 border-t border-secondary-200">
+          <h3 class="text-xl font-bold text-secondary-900 mb-6">Répartition de l'héritage</h3>
+
+          <div id="results-content" class="space-y-4">
+            <!-- Rempli dynamiquement -->
+          </div>
+
+          <!-- Quotité disponible -->
+          <div class="mt-6 p-4 bg-secondary-50 rounded-lg">
+            <h4 class="font-semibold text-secondary-900 mb-2">Réserve héréditaire et quotité disponible</h4>
+            <div class="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <span class="text-secondary-600">Réserve héréditaire :</span>
+                <span id="result-reserve" class="font-medium text-secondary-900 ml-2">-</span>
+              </div>
+              <div>
+                <span class="text-secondary-600">Quotité disponible :</span>
+                <span id="result-quotite" class="font-medium text-secondary-900 ml-2">-</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="text-sm text-secondary-500 mt-6">
+            * Cette simulation est fournie à titre indicatif et ne tient pas compte des donations antérieures ni des dispositions testamentaires.
+          </p>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <CTA type="heritage" />
+
+      <!-- FAQ -->
+      <FAQ items={faq} />
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('simulator-form') as HTMLFormElement;
+  const results = document.getElementById('results') as HTMLElement;
+  const resultsContent = document.getElementById('results-content') as HTMLElement;
+  const spouseSelect = document.getElementById('spouse') as HTMLSelectElement;
+  const spouseOptionContainer = document.getElementById('spouse-option-container') as HTMLElement;
+  const childrenInput = document.getElementById('children') as HTMLInputElement;
+  const otherChildrenContainer = document.getElementById('other-children-container') as HTMLElement;
+
+  function formatCurrency(value: number): string {
+    return new Intl.NumberFormat('fr-FR', {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 0,
+    }).format(value);
+  }
+
+  function formatPercent(value: number): string {
+    return new Intl.NumberFormat('fr-FR', {
+      style: 'percent',
+      maximumFractionDigits: 0,
+    }).format(value);
+  }
+
+  // Afficher/masquer options selon situation
+  spouseSelect.addEventListener('change', () => {
+    const hasSpouse = spouseSelect.value === 'married';
+    const hasChildren = parseInt(childrenInput.value) > 0;
+    spouseOptionContainer.classList.toggle('hidden', !hasSpouse || !hasChildren);
+  });
+
+  childrenInput.addEventListener('input', () => {
+    const hasSpouse = spouseSelect.value === 'married';
+    const hasChildren = parseInt(childrenInput.value) > 0;
+    spouseOptionContainer.classList.toggle('hidden', !hasSpouse || !hasChildren);
+    otherChildrenContainer.classList.toggle('hidden', !hasSpouse || !hasChildren);
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const estate = parseFloat((document.getElementById('estate') as HTMLInputElement).value) || 0;
+    const spouse = spouseSelect.value;
+    const spouseOption = (document.getElementById('spouse-option') as HTMLSelectElement).value;
+    const children = parseInt(childrenInput.value) || 0;
+    const otherChildren = (document.getElementById('other-children') as HTMLInputElement).checked;
+
+    const shares: { label: string; amount: number; note?: string }[] = [];
+    let reserve = 0;
+    let quotite = estate;
+
+    // Calcul selon la situation
+    if (children === 0) {
+      // Pas d'enfants
+      if (spouse === 'married') {
+        shares.push({ label: 'Conjoint survivant', amount: estate, note: 'Totalité de la succession' });
+      } else if (spouse === 'pacs') {
+        shares.push({ label: 'Partenaire de PACS', amount: 0, note: 'Doit être désigné par testament' });
+        shares.push({ label: 'Autres héritiers (parents, frères/sœurs...)', amount: estate });
+      } else {
+        shares.push({ label: 'Parents, frères/sœurs ou autres héritiers', amount: estate });
+      }
+      reserve = 0;
+      quotite = estate;
+    } else {
+      // Avec enfants
+      // Calcul de la réserve
+      if (children === 1) {
+        reserve = estate / 2;
+      } else if (children === 2) {
+        reserve = (estate * 2) / 3;
+      } else {
+        reserve = (estate * 3) / 4;
+      }
+      quotite = estate - reserve;
+
+      if (spouse === 'married') {
+        if (otherChildren) {
+          // Enfants d'un autre lit : conjoint reçoit 1/4 obligatoirement
+          const spouseShare = estate / 4;
+          const childrenShare = (estate * 3) / 4;
+          shares.push({
+            label: 'Conjoint survivant',
+            amount: spouseShare,
+            note: '1/4 en pleine propriété (imposé si enfants d\'autre lit)',
+          });
+          shares.push({
+            label: `Enfants (${children}) - chacun`,
+            amount: childrenShare / children,
+            note: `${formatPercent(3 / 4)} répartis entre ${children} enfant(s)`,
+          });
+        } else {
+          // Enfants communs : choix du conjoint
+          if (spouseOption === 'usufruit') {
+            shares.push({
+              label: 'Conjoint survivant',
+              amount: estate,
+              note: 'Usufruit de toute la succession',
+            });
+            shares.push({
+              label: `Enfants (${children}) - chacun`,
+              amount: estate / children,
+              note: 'Nue-propriété de toute la succession',
+            });
+          } else {
+            const spouseShare = estate / 4;
+            const childrenShare = (estate * 3) / 4;
+            shares.push({
+              label: 'Conjoint survivant',
+              amount: spouseShare,
+              note: '1/4 en pleine propriété',
+            });
+            shares.push({
+              label: `Enfants (${children}) - chacun`,
+              amount: childrenShare / children,
+              note: `${formatPercent(3 / 4)} répartis entre ${children} enfant(s)`,
+            });
+          }
+        }
+      } else {
+        // Pas de conjoint marié
+        const childShare = estate / children;
+        shares.push({
+          label: `Enfants (${children}) - chacun`,
+          amount: childShare,
+          note: 'Parts égales entre tous les enfants',
+        });
+
+        if (spouse === 'pacs') {
+          shares.unshift({
+            label: 'Partenaire de PACS',
+            amount: 0,
+            note: 'Doit être désigné par testament (quotité disponible uniquement)',
+          });
+        }
+      }
+    }
+
+    // Affichage des résultats
+    resultsContent.innerHTML = shares
+      .map(
+        (share) => `
+        <div class="flex justify-between items-start py-4 border-b border-secondary-100">
+          <div>
+            <span class="font-medium text-secondary-900">${share.label}</span>
+            ${share.note ? `<p class="text-sm text-secondary-500 mt-1">${share.note}</p>` : ''}
+          </div>
+          <span class="font-bold text-primary-700 text-lg">${formatCurrency(share.amount)}</span>
+        </div>
+      `
+      )
+      .join('');
+
+    (document.getElementById('result-reserve') as HTMLElement).textContent = formatCurrency(reserve);
+    (document.getElementById('result-quotite') as HTMLElement).textContent = formatCurrency(quotite);
+
+    results.classList.remove('hidden');
+    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>

@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.succession-france.fr/sitemap-index.xml
+
+# Blocage des pages admin/privées
+Disallow: /admin/
+Disallow: /api/
+
+# Crawl-delay pour être poli avec les serveurs
+Crawl-delay: 1

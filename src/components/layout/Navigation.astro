@@ -1,0 +1,93 @@
+---
+import { mainNavigation } from '@data/navigation';
+
+interface Props {
+  mobile?: boolean;
+}
+
+const { mobile = false } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+{mobile ? (
+  <ul class="space-y-2">
+    {mainNavigation.map((item) => (
+      <li>
+        <a
+          href={item.href}
+          class:list={[
+            'block py-2 px-3 rounded-lg font-medium transition-colors',
+            currentPath.startsWith(item.href)
+              ? 'bg-primary-50 text-primary-700'
+              : 'text-secondary-700 hover:bg-secondary-50 hover:text-primary-600',
+          ]}
+        >
+          {item.label}
+        </a>
+        {item.children && (
+          <ul class="ml-4 mt-2 space-y-1">
+            {item.children.map((child) => (
+              <li>
+                <a
+                  href={child.href}
+                  class:list={[
+                    'block py-1.5 px-3 text-sm rounded-lg transition-colors',
+                    currentPath === child.href
+                      ? 'text-primary-700 bg-primary-50'
+                      : 'text-secondary-600 hover:text-primary-600 hover:bg-secondary-50',
+                  ]}
+                >
+                  {child.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </li>
+    ))}
+  </ul>
+) : (
+  <ul class="flex items-center space-x-1">
+    {mainNavigation.map((item) => (
+      <li class="relative group">
+        <a
+          href={item.href}
+          class:list={[
+            'inline-flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors',
+            currentPath.startsWith(item.href)
+              ? 'text-primary-700 bg-primary-50'
+              : 'text-secondary-700 hover:text-primary-600 hover:bg-secondary-50',
+          ]}
+        >
+          {item.label}
+          {item.children && (
+            <svg class="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          )}
+        </a>
+        {item.children && (
+          <div class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+            <ul class="bg-white rounded-xl shadow-lg border border-secondary-100 py-2 min-w-[220px]">
+              {item.children.map((child) => (
+                <li>
+                  <a
+                    href={child.href}
+                    class:list={[
+                      'block px-4 py-2 text-sm transition-colors',
+                      currentPath === child.href
+                        ? 'text-primary-700 bg-primary-50'
+                        : 'text-secondary-700 hover:text-primary-600 hover:bg-secondary-50',
+                    ]}
+                  >
+                    {child.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </li>
+    ))}
+  </ul>
+)}

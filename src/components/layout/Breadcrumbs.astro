@@ -1,0 +1,47 @@
+---
+import { generateBreadcrumbSchema } from '@utils/schema';
+import SchemaOrg from '@components/seo/SchemaOrg.astro';
+
+interface BreadcrumbItem {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+
+// Ajouter l'accueil au début
+const fullItems = [{ label: 'Accueil', href: '/' }, ...items];
+
+// Générer le schema
+const schemaItems = fullItems.map((item) => ({
+  name: item.label,
+  url: item.href,
+}));
+---
+
+<SchemaOrg schema={generateBreadcrumbSchema({ items: schemaItems })} />
+
+<nav aria-label="Fil d'Ariane" class="breadcrumbs mb-6">
+  <ol class="flex items-center flex-wrap gap-2">
+    {fullItems.map((item, index) => (
+      <li class="flex items-center">
+        {index > 0 && (
+          <svg class="w-4 h-4 text-secondary-400 mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        )}
+        {index === fullItems.length - 1 ? (
+          <span class="text-secondary-600 font-medium">{item.label}</span>
+        ) : (
+          <a href={item.href} class="text-secondary-500 hover:text-primary-600 transition-colors">
+            {item.label}
+          </a>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>

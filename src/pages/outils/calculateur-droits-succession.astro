@@ -1,0 +1,243 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/layout/Breadcrumbs.astro';
+import FAQ from '@components/ui/FAQ.astro';
+import CTA from '@components/ui/CTA.astro';
+
+const breadcrumbs = [
+  { label: 'Outils', href: '/outils/' },
+  { label: 'Calculateur droits de succession', href: '/outils/calculateur-droits-succession/' },
+];
+
+const faq = [
+  {
+    question: 'Comment sont calculés les droits de succession ?',
+    answer: 'Les droits de succession sont calculés sur la part nette reçue par chaque héritier, après déduction d\'un abattement qui dépend du lien de parenté. Un barème progressif est ensuite appliqué.',
+  },
+  {
+    question: 'Le conjoint paie-t-il des droits de succession ?',
+    answer: 'Non, le conjoint survivant et le partenaire de PACS sont totalement exonérés de droits de succession depuis 2007.',
+  },
+  {
+    question: 'Quand faut-il payer les droits de succession ?',
+    answer: 'Les droits de succession doivent être payés au moment du dépôt de la déclaration de succession, soit dans les 6 mois suivant le décès.',
+  },
+];
+---
+
+<BaseLayout
+  title="Calculateur de droits de succession gratuit"
+  description="Calculez gratuitement vos droits de succession. Estimez le montant de l'impôt selon votre lien de parenté et la valeur de l'héritage."
+  canonical="/outils/calculateur-droits-succession/"
+>
+  <section class="py-12 md:py-16">
+    <div class="container-narrow">
+      <Breadcrumbs items={breadcrumbs} />
+
+      <header class="text-center mb-12">
+        <h1 class="mb-4">Calculateur de droits de succession</h1>
+        <p class="text-xl text-secondary-600">
+          Estimez gratuitement le montant des droits de succession à payer.
+        </p>
+      </header>
+
+      <!-- Calculateur -->
+      <div class="card mb-12">
+        <form id="calculator-form" class="space-y-6">
+          <!-- Lien de parenté -->
+          <div>
+            <label for="relationship" class="block text-sm font-medium text-secondary-700 mb-2">
+              Votre lien de parenté avec le défunt
+            </label>
+            <select
+              id="relationship"
+              name="relationship"
+              class="w-full px-4 py-3 rounded-lg border border-secondary-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none"
+            >
+              <option value="spouse">Époux ou partenaire de PACS</option>
+              <option value="child" selected>Enfant</option>
+              <option value="grandchild">Petit-enfant</option>
+              <option value="parent">Parent (père ou mère)</option>
+              <option value="sibling">Frère ou sœur</option>
+              <option value="nephew">Neveu ou nièce</option>
+              <option value="other">Autre (non parent)</option>
+            </select>
+          </div>
+
+          <!-- Montant hérité -->
+          <div>
+            <label for="amount" class="block text-sm font-medium text-secondary-700 mb-2">
+              Montant de votre part d'héritage (en €)
+            </label>
+            <input
+              type="number"
+              id="amount"
+              name="amount"
+              min="0"
+              step="1000"
+              placeholder="Ex : 150000"
+              class="w-full px-4 py-3 rounded-lg border border-secondary-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none"
+            />
+          </div>
+
+          <!-- Handicap -->
+          <div class="flex items-center gap-3">
+            <input
+              type="checkbox"
+              id="handicap"
+              name="handicap"
+              class="w-5 h-5 text-primary-600 border-secondary-300 rounded focus:ring-primary-500"
+            />
+            <label for="handicap" class="text-sm text-secondary-700">
+              L'héritier est en situation de handicap (abattement supplémentaire de 159 325 €)
+            </label>
+          </div>
+
+          <!-- Bouton calculer -->
+          <button type="submit" class="btn-primary w-full">
+            Calculer les droits
+          </button>
+        </form>
+
+        <!-- Résultats -->
+        <div id="results" class="hidden mt-8 pt-8 border-t border-secondary-200">
+          <h3 class="text-xl font-bold text-secondary-900 mb-6">Résultat de l'estimation</h3>
+
+          <div class="grid gap-4">
+            <div class="flex justify-between items-center py-3 border-b border-secondary-100">
+              <span class="text-secondary-600">Part héritée</span>
+              <span id="result-amount" class="font-semibold text-secondary-900">-</span>
+            </div>
+            <div class="flex justify-between items-center py-3 border-b border-secondary-100">
+              <span class="text-secondary-600">Abattement applicable</span>
+              <span id="result-abatement" class="font-semibold text-secondary-900">-</span>
+            </div>
+            <div class="flex justify-between items-center py-3 border-b border-secondary-100">
+              <span class="text-secondary-600">Base taxable</span>
+              <span id="result-taxable" class="font-semibold text-secondary-900">-</span>
+            </div>
+            <div class="flex justify-between items-center py-4 bg-primary-50 rounded-lg px-4 -mx-4">
+              <span class="text-primary-800 font-medium">Droits de succession estimés</span>
+              <span id="result-tax" class="text-2xl font-bold text-primary-700">-</span>
+            </div>
+          </div>
+
+          <p class="text-sm text-secondary-500 mt-6">
+            * Cette estimation est fournie à titre indicatif. Consultez un notaire pour un calcul précis de votre situation.
+          </p>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <CTA type="notaire" />
+
+      <!-- FAQ -->
+      <FAQ items={faq} />
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('calculator-form') as HTMLFormElement;
+  const results = document.getElementById('results') as HTMLElement;
+
+  // Abattements par lien de parenté
+  const abatements: Record<string, number> = {
+    spouse: Infinity, // Exonéré
+    child: 100000,
+    grandchild: 1594,
+    parent: 100000,
+    sibling: 15932,
+    nephew: 7967,
+    other: 1594,
+  };
+
+  // Barème en ligne directe
+  const baremeDirect = [
+    { limit: 8072, rate: 0.05 },
+    { limit: 12109, rate: 0.1 },
+    { limit: 15932, rate: 0.15 },
+    { limit: 552324, rate: 0.2 },
+    { limit: 902838, rate: 0.3 },
+    { limit: 1805677, rate: 0.4 },
+    { limit: Infinity, rate: 0.45 },
+  ];
+
+  // Barème frères/soeurs
+  const baremeSibling = [
+    { limit: 24430, rate: 0.35 },
+    { limit: Infinity, rate: 0.45 },
+  ];
+
+  function calculateTax(taxable: number, relationship: string): number {
+    if (taxable <= 0) return 0;
+
+    let bareme;
+    if (['child', 'parent', 'grandchild'].includes(relationship)) {
+      bareme = baremeDirect;
+    } else if (relationship === 'sibling') {
+      bareme = baremeSibling;
+    } else if (relationship === 'nephew') {
+      return taxable * 0.55;
+    } else {
+      return taxable * 0.6;
+    }
+
+    let tax = 0;
+    let remaining = taxable;
+    let previousLimit = 0;
+
+    for (const bracket of bareme) {
+      const taxableInBracket = Math.min(remaining, bracket.limit - previousLimit);
+      tax += taxableInBracket * bracket.rate;
+      remaining -= taxableInBracket;
+      previousLimit = bracket.limit;
+      if (remaining <= 0) break;
+    }
+
+    return tax;
+  }
+
+  function formatCurrency(value: number): string {
+    return new Intl.NumberFormat('fr-FR', {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 0,
+    }).format(value);
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const relationship = (document.getElementById('relationship') as HTMLSelectElement).value;
+    const amount = parseFloat((document.getElementById('amount') as HTMLInputElement).value) || 0;
+    const handicap = (document.getElementById('handicap') as HTMLInputElement).checked;
+
+    // Calcul de l'abattement
+    let abatement = abatements[relationship];
+    if (handicap && relationship !== 'spouse') {
+      abatement += 159325;
+    }
+
+    // Calcul de la base taxable
+    const taxable = Math.max(0, amount - abatement);
+
+    // Calcul des droits
+    let tax = 0;
+    if (relationship === 'spouse') {
+      tax = 0; // Exonéré
+    } else {
+      tax = calculateTax(taxable, relationship);
+    }
+
+    // Affichage des résultats
+    (document.getElementById('result-amount') as HTMLElement).textContent = formatCurrency(amount);
+    (document.getElementById('result-abatement') as HTMLElement).textContent =
+      relationship === 'spouse' ? 'Exonéré' : formatCurrency(Math.min(abatement, amount));
+    (document.getElementById('result-taxable') as HTMLElement).textContent = formatCurrency(taxable);
+    (document.getElementById('result-tax') as HTMLElement).textContent = formatCurrency(Math.round(tax));
+
+    results.classList.remove('hidden');
+    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>

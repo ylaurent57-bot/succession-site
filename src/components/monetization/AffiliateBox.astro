@@ -1,0 +1,86 @@
+---
+import { type AffiliateLink, getAffiliateById, getFeaturedAffiliates } from '@data/affiliate-links';
+
+interface Props {
+  affiliateId?: string;
+  showFeatured?: boolean;
+  variant?: 'card' | 'banner' | 'sidebar';
+}
+
+const { affiliateId, showFeatured = false, variant = 'card' } = Astro.props;
+
+let affiliates: AffiliateLink[] = [];
+
+if (affiliateId) {
+  const single = getAffiliateById(affiliateId);
+  if (single) affiliates = [single];
+} else if (showFeatured) {
+  affiliates = getFeaturedAffiliates();
+}
+---
+
+{variant === 'card' && affiliates.length > 0 && (
+  <div class="grid gap-4 my-6">
+    {affiliates.map((affiliate) => (
+      <div class="card-highlight">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <span class="badge badge-primary mb-2">{affiliate.category}</span>
+            <h4 class="font-semibold text-secondary-900">{affiliate.name}</h4>
+            <p class="text-sm text-secondary-600 mt-1">{affiliate.description}</p>
+          </div>
+          <a
+            href={affiliate.url}
+            class="btn-primary whitespace-nowrap"
+            rel="noopener sponsored"
+            target="_blank"
+          >
+            {affiliate.cta}
+          </a>
+        </div>
+      </div>
+    ))}
+  </div>
+)}
+
+{variant === 'banner' && affiliates[0] && (
+  <div class="bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl p-6 my-8">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div>
+        <h4 class="text-xl font-bold">{affiliates[0].name}</h4>
+        <p class="text-primary-100 mt-1">{affiliates[0].description}</p>
+      </div>
+      <a
+        href={affiliates[0].url}
+        class="inline-flex items-center px-6 py-3 bg-white text-primary-700 font-semibold rounded-lg hover:bg-primary-50 transition-colors whitespace-nowrap"
+        rel="noopener sponsored"
+        target="_blank"
+      >
+        {affiliates[0].cta}
+        <svg class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+)}
+
+{variant === 'sidebar' && affiliates.length > 0 && (
+  <aside class="space-y-4">
+    <h3 class="text-lg font-semibold text-secondary-900">Nos recommandations</h3>
+    {affiliates.map((affiliate) => (
+      <div class="bg-secondary-50 rounded-lg p-4">
+        <h4 class="font-medium text-secondary-900 text-sm">{affiliate.name}</h4>
+        <p class="text-xs text-secondary-600 mt-1 mb-3">{affiliate.description}</p>
+        <a
+          href={affiliate.url}
+          class="text-sm text-primary-600 hover:text-primary-700 font-medium"
+          rel="noopener sponsored"
+          target="_blank"
+        >
+          {affiliate.cta} &rarr;
+        </a>
+      </div>
+    ))}
+  </aside>
+)}

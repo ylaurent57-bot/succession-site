@@ -1,0 +1,48 @@
+---
+import ArticleCard from './ArticleCard.astro';
+
+interface Article {
+  slug: string;
+  data: {
+    title: string;
+    description: string;
+    date: Date;
+    category?: string;
+  };
+}
+
+interface Props {
+  articles: Article[];
+  title?: string;
+  showAll?: boolean;
+  limit?: number;
+  columns?: 2 | 3;
+}
+
+const { articles, title, showAll = false, limit = 6, columns = 3 } = Astro.props;
+
+const displayedArticles = showAll ? articles : articles.slice(0, limit);
+
+const gridClass = columns === 2
+  ? 'grid-cols-1 md:grid-cols-2'
+  : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
+---
+
+<section class="my-12">
+  {title && (
+    <h2 class="text-2xl md:text-3xl font-bold text-secondary-900 mb-8">{title}</h2>
+  )}
+
+  <div class={`grid ${gridClass} gap-6`}>
+    {displayedArticles.map((article, index) => (
+      <ArticleCard
+        title={article.data.title}
+        description={article.data.description}
+        href={`/blog/${article.slug}/`}
+        date={article.data.date}
+        category={article.data.category}
+        featured={index === 0 && !showAll}
+      />
+    ))}
+  </div>
+</section>

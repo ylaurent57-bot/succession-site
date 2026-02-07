@@ -1,0 +1,183 @@
+---
+import PillarLayout from '@layouts/PillarLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) =>
+  !data.draft && data.category === 'Héritage'
+);
+const relatedArticles = allPosts
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 6)
+  .map((post) => ({
+    title: post.data.title,
+    description: post.data.description,
+    href: `/blog/${post.slug}/`,
+    date: post.data.date,
+  }));
+
+const faq = [
+  {
+    question: 'Quelle est la différence entre héritage et succession ?',
+    answer: 'La succession désigne le processus de transmission du patrimoine d\'un défunt. L\'héritage correspond à ce que reçoit effectivement chaque héritier. La succession est le cadre juridique, l\'héritage est le résultat.',
+  },
+  {
+    question: 'Peut-on déshériter ses enfants en France ?',
+    answer: 'Non, en France, les enfants sont des héritiers réservataires : ils ont droit à une part minimale (réserve héréditaire) dont ils ne peuvent être privés. La quotité disponible (part libre) représente la moitié si un enfant, un tiers si deux enfants, un quart si trois enfants ou plus.',
+  },
+  {
+    question: 'Le conjoint hérite-t-il automatiquement ?',
+    answer: 'Le conjoint marié est héritier légal. En présence d\'enfants communs, il peut choisir entre l\'usufruit de toute la succession ou 1/4 en pleine propriété. En l\'absence d\'enfants, ses droits augmentent. Le partenaire de PACS ou concubin doit être désigné par testament.',
+  },
+  {
+    question: 'Comment est calculée la part d\'héritage de chacun ?',
+    answer: 'La part de chaque héritier dépend de son rang dans l\'ordre successoral et du nombre d\'héritiers du même rang. Les descendants se partagent la succession à parts égales, avec des règles spécifiques pour le conjoint survivant.',
+  },
+];
+
+const headings = [
+  { depth: 2, slug: 'definition', text: 'Qu\'est-ce que l\'héritage ?' },
+  { depth: 2, slug: 'ordre-heritiers', text: 'L\'ordre des héritiers' },
+  { depth: 2, slug: 'reserve-hereditaire', text: 'La réserve héréditaire' },
+  { depth: 2, slug: 'conjoint', text: 'Les droits du conjoint survivant' },
+  { depth: 2, slug: 'partage', text: 'Le partage de l\'héritage' },
+];
+---
+
+<PillarLayout
+  title="Héritage : Qui hérite et comment ? Guide 2024"
+  description="Comprendre l'héritage en France : ordre des héritiers, réserve héréditaire, droits du conjoint. Tout savoir sur la répartition de l'héritage."
+  category="Héritage"
+  headings={headings}
+  relatedArticles={relatedArticles}
+  faq={faq}
+>
+  <h2 id="definition">Qu'est-ce que l'héritage ?</h2>
+  <p>
+    L'<strong>héritage</strong> désigne l'ensemble des biens, droits et obligations qu'une personne reçoit à la suite du décès d'une autre personne. Il constitue la part de succession attribuée à chaque héritier.
+  </p>
+  <p>
+    En France, les règles de l'héritage sont strictement encadrées par la loi, notamment pour protéger certains héritiers (les héritiers réservataires) qui ne peuvent pas être totalement déshérités.
+  </p>
+
+  <h2 id="ordre-heritiers">L'ordre des héritiers</h2>
+  <p>
+    La loi française classe les héritiers en quatre ordres de priorité. Les héritiers d'un ordre excluent ceux des ordres suivants :
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Ordre</th>
+        <th>Héritiers</th>
+        <th>Part d'héritage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1er ordre</td>
+        <td>Descendants (enfants, petits-enfants)</td>
+        <td>Parts égales entre eux</td>
+      </tr>
+      <tr>
+        <td>2e ordre</td>
+        <td>Parents, frères et sœurs</td>
+        <td>1/4 par parent + reste aux frères/sœurs</td>
+      </tr>
+      <tr>
+        <td>3e ordre</td>
+        <td>Ascendants autres que parents</td>
+        <td>Moitié paternelle, moitié maternelle</td>
+      </tr>
+      <tr>
+        <td>4e ordre</td>
+        <td>Collatéraux (oncles, cousins...)</td>
+        <td>Parts égales jusqu'au 6e degré</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <strong>Le conjoint survivant</strong> est un héritier à part : il hérite dans tous les cas, mais sa part varie selon les autres héritiers présents.
+  </div>
+
+  <h2 id="reserve-hereditaire">La réserve héréditaire</h2>
+  <p>
+    La <strong>réserve héréditaire</strong> est la part de la succession obligatoirement réservée aux héritiers réservataires (descendants et, en l'absence de descendants, le conjoint survivant).
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre d'enfants</th>
+        <th>Réserve héréditaire</th>
+        <th>Quotité disponible</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1 enfant</td>
+        <td>1/2 de la succession</td>
+        <td>1/2 de la succession</td>
+      </tr>
+      <tr>
+        <td>2 enfants</td>
+        <td>2/3 de la succession</td>
+        <td>1/3 de la succession</td>
+      </tr>
+      <tr>
+        <td>3 enfants ou plus</td>
+        <td>3/4 de la succession</td>
+        <td>1/4 de la succession</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    La <strong>quotité disponible</strong> est la part dont le défunt peut librement disposer par testament ou donation, au profit de qui il souhaite.
+  </p>
+
+  <h2 id="conjoint">Les droits du conjoint survivant</h2>
+  <p>
+    Les droits du conjoint survivant dépendent de la situation familiale :
+  </p>
+
+  <h3>En présence d'enfants communs</h3>
+  <p>Le conjoint peut choisir entre :</p>
+  <ul>
+    <li><strong>L'usufruit de toute la succession</strong> (jouissance des biens sans en être propriétaire)</li>
+    <li><strong>1/4 en pleine propriété</strong></li>
+  </ul>
+
+  <h3>En présence d'enfants d'un autre lit</h3>
+  <p>
+    Le conjoint reçoit obligatoirement <strong>1/4 en pleine propriété</strong> (pas d'option possible).
+  </p>
+
+  <h3>En l'absence d'enfants</h3>
+  <ul>
+    <li>Avec les parents du défunt : <strong>1/2 en pleine propriété</strong></li>
+    <li>Avec un seul parent : <strong>3/4 en pleine propriété</strong></li>
+    <li>Sans parents : <strong>toute la succession</strong> (sauf biens de famille)</li>
+  </ul>
+
+  <div class="warning-box">
+    <strong>Attention :</strong> Ces droits ne concernent que le conjoint marié. Le partenaire de PACS et le concubin n'ont aucun droit successoral légal.
+  </div>
+
+  <h2 id="partage">Le partage de l'héritage</h2>
+  <p>
+    Le partage peut se faire de deux manières :
+  </p>
+  <ul>
+    <li>
+      <strong>Partage amiable</strong> : Les héritiers s'accordent sur la répartition. Un acte notarié est nécessaire si la succession comprend des biens immobiliers.
+    </li>
+    <li>
+      <strong>Partage judiciaire</strong> : En cas de désaccord, le tribunal peut être saisi pour trancher. Cette procédure est plus longue et coûteuse.
+    </li>
+  </ul>
+
+  <div class="success-box">
+    <strong>Conseil :</strong> Avant le partage définitif, les héritiers sont en <em>indivision</em> : ils sont propriétaires ensemble de tous les biens. Cette situation peut être source de conflits, d'où l'intérêt d'un partage rapide.
+  </div>
+</PillarLayout>
