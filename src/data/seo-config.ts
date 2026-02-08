@@ -3,7 +3,7 @@ export const siteConfig = {
   title: 'Succession & Héritage en France : démarches, calculateur, droits et frais',
   description:
     'Guide clair et structuré sur la succession en France : démarches, droits de succession, frais de notaire, testament, donation. Simulateur et FAQ.',
-  url: 'https://www.succession-france.fr',
+  url: 'https://succession-guide.fr',
   ogImage: '/images/og/default-og.jpg',
   locale: 'fr_FR',
   language: 'fr',
