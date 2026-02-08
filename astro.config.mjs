@@ -6,7 +6,7 @@ import path from 'path';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  site: 'https://www.succession-france.fr',
+  site: 'https://succession-guide.fr',
   integrations: [
     tailwind(),
     // Note: sitemap() à réactiver après mise à jour du package
