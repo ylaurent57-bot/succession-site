@@ -109,3 +109,5 @@ Sans testament :
 - Un testament permet de modifier cette répartition dans les limites de la loi
 
 Si vous souhaitez organiser votre succession autrement, consultez un notaire pour rédiger un testament adapté à votre situation.
+
+> **Estimez votre part :** Faites une [simulation héritage gratuite](/outils/simulateur-heritage/) pour calculer la répartition entre héritiers selon votre situation familiale.

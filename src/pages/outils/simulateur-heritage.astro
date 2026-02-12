@@ -3,6 +3,22 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Breadcrumbs from '@components/layout/Breadcrumbs.astro';
 import FAQ from '@components/ui/FAQ.astro';
 import CTA from '@components/ui/CTA.astro';
+import SchemaOrg from '@components/seo/SchemaOrg.astro';
+
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Simulation héritage - Simulateur de partage',
+  url: 'https://succession-guide.fr/outils/simulateur-heritage/',
+  description: 'Simulation héritage gratuite : calculez la répartition de votre héritage entre conjoint et enfants selon les règles françaises.',
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'All',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'EUR',
+  },
+};
 
 const breadcrumbs = [
   { label: 'Outils', href: '/outils/' },
@@ -22,22 +38,31 @@ const faq = [
     question: 'Le concubin ou partenaire de PACS hérite-t-il automatiquement ?',
     answer: 'Non, contrairement au conjoint marié, le partenaire de PACS et le concubin n\'ont aucun droit successoral légal. Ils doivent être désignés par testament pour hériter.',
   },
+  {
+    question: 'Qu\'est-ce qu\'une simulation d\'héritage ?',
+    answer: 'Une simulation d\'héritage est un outil en ligne qui permet d\'estimer la répartition d\'une succession entre les différents héritiers. Elle prend en compte la situation matrimoniale, le nombre d\'enfants et le montant du patrimoine pour calculer la part de chacun selon le droit français.',
+  },
+  {
+    question: 'La simulation d\'héritage est-elle fiable ?',
+    answer: 'Notre simulation d\'héritage applique les règles légales françaises (réserve héréditaire, droits du conjoint survivant). Elle fournit une estimation indicative. Pour une évaluation précise tenant compte des donations antérieures, du testament ou de situations complexes, consultez un notaire.',
+  },
 ];
 ---
 
 <BaseLayout
-  title="Simulateur de partage d'héritage gratuit"
-  description="Simulez gratuitement la répartition de l'héritage entre héritiers. Calculez la part du conjoint, des enfants selon les règles légales françaises."
+  title="Simulation Héritage Gratuite : Simulateur de Partage en Ligne"
+  description="Simulation héritage gratuite en ligne. Calculez la répartition de votre héritage entre conjoint et enfants selon les règles de succession françaises."
   canonical="/outils/simulateur-heritage/"
 >
   <section class="py-12 md:py-16">
     <div class="container-narrow">
       <Breadcrumbs items={breadcrumbs} />
+      <SchemaOrg schema={webAppSchema} />
 
       <header class="text-center mb-12">
-        <h1 class="mb-4">Simulateur de partage d'héritage</h1>
+        <h1 class="mb-4">Simulation héritage : calculez votre partage</h1>
         <p class="text-xl text-secondary-600">
-          Calculez la répartition de l'héritage selon la situation familiale.
+          Faites une simulation héritage gratuite pour connaître la répartition entre héritiers selon la situation familiale et les règles de succession françaises.
         </p>
       </header>
 

@@ -11,7 +11,7 @@ export const siteConfig = {
   twitterHandle: '@successionfr',
 };
 
-export const globalKeywords = 'succession, héritage, droits de succession, donation, testament, frais de notaire, simulateur succession, succession France, héritage France, calcul droits succession';
+export const globalKeywords = 'succession, héritage, droits de succession, donation, testament, frais de notaire, simulateur succession, simulation héritage, succession France, héritage France, calcul droits succession';
 
 export const defaultMeta = {
   robots: 'index, follow',
@@ -53,6 +53,7 @@ export const keywords = {
     'succession dette',
     'accepter succession',
     'renoncer succession',
+    'simulation succession',
   ],
   heritage: [
     'héritage',
@@ -63,6 +64,9 @@ export const keywords = {
     'héritage enfant',
     'réserve héréditaire',
     'quotité disponible',
+    'simulation héritage',
+    'simulateur héritage',
+    'simuler héritage',
   ],
   donation: [
     'donation',

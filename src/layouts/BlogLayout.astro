@@ -5,6 +5,7 @@ import TableOfContents from '@components/blog/TableOfContents.astro';
 import CTA from '@components/ui/CTA.astro';
 import LeadForm from '@components/ui/LeadForm.astro';
 import AffiliateBox from '@components/monetization/AffiliateBox.astro';
+import FAQ from '@components/ui/FAQ.astro';
 import { generateArticleSchema } from '@utils/schema';
 import { formatDateFR, estimateReadingTime } from '@utils/seo';
 import { siteConfig } from '@data/seo-config';
@@ -19,6 +20,7 @@ interface Props {
     category?: string;
     tags?: string[];
     image?: string;
+    faq?: { question: string; answer: string }[];
   };
   headings: { depth: number; slug: string; text: string }[];
   rawContent?: () => string;
@@ -104,6 +106,11 @@ const ctaType = frontmatter.category?.toLowerCase() as 'succession' | 'heritage'
 
       <!-- CTA Box -->
       <CTA type={ctaType} />
+
+      <!-- FAQ -->
+      {frontmatter.faq && frontmatter.faq.length > 0 && (
+        <FAQ items={frontmatter.faq} />
+      )}
 
       <!-- Tags -->
       {frontmatter.tags && frontmatter.tags.length > 0 && (

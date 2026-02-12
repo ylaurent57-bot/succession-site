@@ -124,3 +124,5 @@ Le conjoint survivant bénéficie de :
 - **Protections supplémentaires** possibles par donation ou testament
 
 Pour optimiser la protection du conjoint, consultez un notaire qui vous conseillera selon votre situation familiale et patrimoniale.
+
+> **Simulez votre situation :** Utilisez notre [simulation héritage gratuite](/outils/simulateur-heritage/) pour calculer la part du conjoint survivant et des enfants selon votre situation.
