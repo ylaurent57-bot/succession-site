@@ -1,0 +1,370 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@utils/schema';
+
+const serviceSchema = generateServiceSchema({
+  name: 'Devis Succession Gratuit',
+  description: 'Demandez un devis gratuit pour votre succession. Notaires spécialisés près de chez vous, réponse sous 48h.',
+  url: 'https://succession-guide.fr/devis-succession/',
+  serviceType: 'Conseil en succession',
+});
+
+const faqItems = [
+  {
+    question: 'Le devis est-il vraiment gratuit ?',
+    answer: 'Oui, la demande de devis est entièrement gratuite et sans engagement. Vous recevez des propositions de notaires spécialisés sans aucun frais.',
+  },
+  {
+    question: 'Combien coûte un notaire pour une succession ?',
+    answer: 'Les frais de notaire pour une succession comprennent les émoluments réglementés (fixés par décret), les débours et les honoraires libres. En moyenne, comptez entre 1% et 4% de l\'actif successoral selon la complexité du dossier.',
+  },
+  {
+    question: 'Comment choisir son notaire pour une succession ?',
+    answer: 'Choisissez un notaire spécialisé en droit des successions, proche de votre domicile ou du lieu du bien immobilier. Comparez plusieurs devis et vérifiez que le notaire est inscrit à la Chambre des Notaires.',
+  },
+  {
+    question: 'Quel est le délai pour régler une succession ?',
+    answer: 'Le règlement d\'une succession prend en moyenne 6 à 12 mois. La déclaration de succession doit être déposée dans les 6 mois suivant le décès (12 mois en cas de décès à l\'étranger).',
+  },
+];
+
+const faqSchema = generateFAQSchema({ questions: faqItems });
+
+const breadcrumbSchema = generateBreadcrumbSchema({
+  items: [
+    { name: 'Accueil', url: '/' },
+    { name: 'Devis Succession', url: '/devis-succession/' },
+  ],
+});
+---
+
+<BaseLayout
+  title="Devis Succession Gratuit : Trouvez un Notaire Spécialisé"
+  description="Demandez un devis gratuit pour votre succession. Notaires spécialisés près de chez vous. Réponse sous 48h, sans engagement."
+  canonical="/devis-succession/"
+  schema={[serviceSchema, faqSchema, breadcrumbSchema]}
+>
+  <section class="py-12 md:py-16">
+    <div class="container-narrow">
+      <!-- Breadcrumbs -->
+      <nav class="text-sm text-secondary-500 mb-8" aria-label="Fil d'Ariane">
+        <a href="/" class="hover:text-primary-600">Accueil</a>
+        <span class="mx-2">/</span>
+        <span class="text-secondary-700">Devis Succession</span>
+      </nav>
+
+      <!-- Header -->
+      <header class="text-center mb-12">
+        <h1 class="mb-4">Devis Succession Gratuit</h1>
+        <p class="text-xl text-secondary-600 max-w-2xl mx-auto">
+          Recevez des devis personnalisés de notaires spécialisés en succession près de chez vous. <strong>Gratuit, rapide et sans engagement.</strong>
+        </p>
+      </header>
+
+      <!-- Trust banner -->
+      <div class="bg-primary-50 border border-primary-200 rounded-xl p-4 mb-10 text-center">
+        <p class="text-secondary-700 text-sm">
+          <strong class="text-primary-700">Service 100% gratuit</strong> — Vos données sont protégées conformément au RGPD — Notaires inscrits à la Chambre des Notaires
+        </p>
+      </div>
+
+      <!-- Two-column layout -->
+      <div class="grid md:grid-cols-5 gap-8 lg:gap-12">
+
+        <!-- Form column -->
+        <div class="md:col-span-3">
+          <div class="card p-6 md:p-8">
+            <h2 class="text-xl font-bold text-secondary-900 mb-6">Décrivez votre situation</h2>
+
+            <form id="devis-form" class="space-y-5">
+              <input type="hidden" name="source" value="devis-succession" />
+
+              <!-- Honeypot anti-spam -->
+              <div style="display:none" aria-hidden="true">
+                <input type="text" name="website" tabindex="-1" autocomplete="off" />
+              </div>
+
+              <div>
+                <label for="nom" class="block text-sm font-medium text-secondary-700 mb-2">
+                  Nom complet <span class="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="nom"
+                  name="nom"
+                  required
+                  placeholder="Jean Dupont"
+                  class="w-full px-4 py-3 rounded-lg border border-secondary-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
+                />
+              </div>
+
+              <div>
+                <label for="email" class="block text-sm font-medium text-secondary-700 mb-2">
+                  Adresse email <span class="text-red-500">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  placeholder="jean.dupont@email.com"
+                  class="w-full px-4 py-3 rounded-lg border border-secondary-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
+                />
+              </div>
+
+              <div>
+                <label for="telephone" class="block text-sm font-medium text-secondary-700 mb-2">
+                  Téléphone <span class="text-red-500">*</span>
+                </label>
+                <input
+                  type="tel"
+                  id="telephone"
+                  name="telephone"
+                  required
+                  pattern="[0-9]{10}"
+                  placeholder="06 12 34 56 78"
+                  class="w-full px-4 py-3 rounded-lg border border-secondary-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
+                />
+                <p class="text-xs text-secondary-500 mt-1">Format : 10 chiffres sans espaces</p>
+              </div>
+
+              <div>
+                <label for="code_postal" class="block text-sm font-medium text-secondary-700 mb-2">
+                  Code postal <span class="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="code_postal"
+                  name="code_postal"
+                  required
+                  pattern="[0-9]{5}"
+                  maxlength="5"
+                  placeholder="75001"
+                  class="w-full px-4 py-3 rounded-lg border border-secondary-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
+                />
+                <p class="text-xs text-secondary-500 mt-1">Pour trouver un notaire près de chez vous</p>
+              </div>
+
+              <div>
+                <label for="type_succession" class="block text-sm font-medium text-secondary-700 mb-2">
+                  Type de demande <span class="text-red-500">*</span>
+                </label>
+                <select
+                  id="type_succession"
+                  name="type_succession"
+                  required
+                  class="w-full px-4 py-3 rounded-lg border border-secondary-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
+                >
+                  <option value="">-- Sélectionnez --</option>
+                  <option value="succession-deces">Succession suite à un décès</option>
+                  <option value="donation">Donation de son vivant</option>
+                  <option value="testament">Rédaction de testament</option>
+                  <option value="optimisation">Optimisation fiscale</option>
+                  <option value="conseil">Conseil général en succession</option>
+                  <option value="autre">Autre</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="message" class="block text-sm font-medium text-secondary-700 mb-2">
+                  Message <span class="text-secondary-400">(facultatif)</span>
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="3"
+                  placeholder="Décrivez brièvement votre situation..."
+                  class="w-full px-4 py-3 rounded-lg border border-secondary-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all resize-none"
+                ></textarea>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <input
+                  type="checkbox"
+                  id="rgpd_consent"
+                  name="rgpd_consent"
+                  required
+                  class="mt-1 w-4 h-4 text-primary-600 border-secondary-300 rounded focus:ring-primary-500"
+                />
+                <label for="rgpd_consent" class="text-sm text-secondary-600">
+                  J'accepte que mes données soient transmises à des notaires partenaires pour recevoir un devis. Je reconnais avoir pris connaissance de la
+                  <a href="/confidentialite/" class="text-primary-600 hover:underline">politique de confidentialité</a>. <span class="text-red-500">*</span>
+                </label>
+              </div>
+
+              <button type="submit" class="btn-primary w-full text-lg py-4">
+                Recevoir mon devis gratuit
+              </button>
+
+              <p class="text-xs text-secondary-500 text-center">
+                Service gratuit et sans engagement. Vos données sont sécurisées.
+              </p>
+            </form>
+          </div>
+        </div>
+
+        <!-- Trust signals column -->
+        <div class="md:col-span-2 space-y-4">
+          <div class="card p-5">
+            <div class="flex items-start gap-3">
+              <svg class="w-8 h-8 text-primary-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              <div>
+                <h3 class="font-semibold text-secondary-900">Gratuit et sans engagement</h3>
+                <p class="text-sm text-secondary-600 mt-1">Recevez des devis personnalisés de notaires spécialisés, sans aucun frais.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card p-5">
+            <div class="flex items-start gap-3">
+              <svg class="w-8 h-8 text-primary-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div>
+                <h3 class="font-semibold text-secondary-900">Réponse sous 48h</h3>
+                <p class="text-sm text-secondary-600 mt-1">Un notaire vous contacte rapidement pour étudier votre dossier.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card p-5">
+            <div class="flex items-start gap-3">
+              <svg class="w-8 h-8 text-primary-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              <div>
+                <h3 class="font-semibold text-secondary-900">Données protégées</h3>
+                <p class="text-sm text-secondary-600 mt-1">Vos informations sont sécurisées conformément au RGPD.
+                  <a href="/confidentialite/" class="text-primary-600 hover:underline">En savoir plus</a>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card p-5">
+            <div class="flex items-start gap-3">
+              <svg class="w-8 h-8 text-primary-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+              </svg>
+              <div>
+                <h3 class="font-semibold text-secondary-900">Notaires certifiés</h3>
+                <p class="text-sm text-secondary-600 mt-1">Nos partenaires sont des notaires inscrits à la Chambre des Notaires.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional trust content -->
+          <div class="bg-secondary-50 rounded-xl p-5 mt-4">
+            <h3 class="font-semibold text-secondary-900 mb-3">Pourquoi passer par notre service ?</h3>
+            <ul class="space-y-2 text-sm text-secondary-600">
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Comparez plusieurs devis facilement
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Notaires spécialisés en succession
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Accompagnement personnalisé
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Service disponible partout en France
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="mt-16">
+        <h2 class="text-2xl font-bold text-secondary-900 mb-8 text-center">Questions fréquentes</h2>
+        <div class="space-y-4 max-w-3xl mx-auto">
+          {faqItems.map((item) => (
+            <details class="card group">
+              <summary class="flex items-center justify-between cursor-pointer font-semibold text-secondary-900">
+                {item.question}
+                <svg class="w-5 h-5 text-secondary-400 group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <p class="text-secondary-600 mt-3">{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('devis-form') as HTMLFormElement;
+  const WEBHOOK_URL = 'YOUR_WEBHOOK_URL_HERE';
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const originalText = button.textContent;
+    button.textContent = 'Envoi en cours...';
+    button.disabled = true;
+
+    const formData = new FormData(form);
+    const data: Record<string, string> = {};
+    formData.forEach((value, key) => {
+      data[key] = value.toString();
+    });
+    data.timestamp = new Date().toISOString();
+
+    // Honeypot check
+    if (data.website) {
+      window.location.href = '/devis-succession/merci/';
+      return;
+    }
+
+    try {
+      const response = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        if (typeof gtag === 'function') {
+          gtag('event', 'generate_lead', {
+            event_category: 'Lead',
+            event_label: data.type_succession,
+            value: 1,
+          });
+        }
+        window.location.href = '/devis-succession/merci/';
+      } else {
+        throw new Error('Erreur serveur');
+      }
+    } catch (error) {
+      if (button) {
+        button.textContent = originalText;
+        button.disabled = false;
+      }
+      const existing = form.querySelector('.error-message');
+      if (existing) existing.remove();
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'error-message bg-red-50 border border-red-200 text-red-700 rounded-lg p-4 mt-4';
+      errorDiv.textContent = 'Une erreur est survenue. Veuillez réessayer ou nous contacter directement.';
+      form.appendChild(errorDiv);
+      setTimeout(() => errorDiv.remove(), 5000);
+    }
+  });
+</script>

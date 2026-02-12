@@ -92,6 +92,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://succession-guide.fr/devis-succession/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://succession-guide.fr/a-propos/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

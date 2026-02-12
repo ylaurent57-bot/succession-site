@@ -14,7 +14,7 @@ export const affiliateLinks: AffiliateLink[] = [
     id: 'notaire-devis',
     name: 'Trouver un notaire',
     description: 'Obtenez des devis gratuits de notaires près de chez vous pour votre succession.',
-    url: '#', // Remplacer par votre lien d'affiliation
+    url: '/devis-succession/',
     category: 'notaire',
     cta: 'Demander un devis gratuit',
     featured: true,

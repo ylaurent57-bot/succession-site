@@ -16,6 +16,9 @@ const affiliate = getAffiliateById(affiliateId || ctaConfig?.affiliateId);
 
 const displayTitle = title || ctaConfig?.title || 'Besoin d\'aide ?';
 const displayDescription = description || ctaConfig?.description || 'Consultez un professionnel pour votre situation.';
+
+const isInternal = affiliate?.url?.startsWith('/');
+const linkAttrs = isInternal ? {} : { rel: 'noopener sponsored', target: '_blank' };
 ---
 
 {variant === 'default' && (
@@ -26,8 +29,7 @@ const displayDescription = description || ctaConfig?.description || 'Consultez u
       <a
         href={affiliate.url}
         class="inline-flex items-center px-6 py-3 bg-white text-primary-700 font-semibold rounded-lg hover:bg-primary-50 transition-colors"
-        rel="noopener sponsored"
-        target="_blank"
+        {...linkAttrs}
       >
         {affiliate.cta}
         <svg class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -49,8 +51,7 @@ const displayDescription = description || ctaConfig?.description || 'Consultez u
         <a
           href={affiliate.url}
           class="btn-primary whitespace-nowrap text-sm"
-          rel="noopener sponsored"
-          target="_blank"
+          {...linkAttrs}
         >
           {affiliate.cta}
         </a>
@@ -63,8 +64,7 @@ const displayDescription = description || ctaConfig?.description || 'Consultez u
   <a
     href={affiliate.url}
     class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium"
-    rel="noopener sponsored"
-    target="_blank"
+    {...linkAttrs}
   >
     {affiliate.cta}
     <svg class="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">

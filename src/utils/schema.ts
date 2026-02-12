@@ -121,6 +121,40 @@ export function generateWebsiteSchema(): object {
   };
 }
 
+export interface ServiceSchemaProps {
+  name: string;
+  description: string;
+  url: string;
+  serviceType?: string;
+  areaServed?: string;
+}
+
+export function generateServiceSchema(props: ServiceSchemaProps): object {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: props.name,
+    description: props.description,
+    url: props.url,
+    serviceType: props.serviceType || 'Conseil en succession',
+    areaServed: {
+      '@type': 'Country',
+      name: props.areaServed || 'France',
+    },
+    provider: {
+      '@type': 'Organization',
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'EUR',
+      description: 'Devis gratuit et sans engagement',
+    },
+  };
+}
+
 export function generateHowToSchema(
   title: string,
   description: string,

@@ -1,0 +1,78 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Demande envoyée - Devis Succession"
+  description="Votre demande de devis succession a bien été envoyée. Un notaire vous contactera sous 48h."
+  canonical="/devis-succession/merci/"
+  noindex={true}
+>
+  <section class="py-16 md:py-24">
+    <div class="container-narrow">
+      <div class="max-w-2xl mx-auto text-center">
+        <!-- Success icon -->
+        <div class="mb-8">
+          <svg class="w-20 h-20 text-green-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+
+        <h1 class="text-3xl font-bold text-secondary-900 mb-4">Votre demande a bien été envoyée</h1>
+        <p class="text-xl text-secondary-600 mb-10">
+          Merci pour votre confiance. Un notaire spécialisé en succession vous contactera dans les plus brefs délais.
+        </p>
+
+        <!-- Next steps -->
+        <div class="card text-left p-6 md:p-8 mb-10">
+          <h2 class="text-lg font-bold text-secondary-900 mb-4">Prochaines étapes</h2>
+          <ol class="space-y-4">
+            <li class="flex items-start gap-3">
+              <span class="flex-shrink-0 w-7 h-7 rounded-full bg-primary-100 text-primary-700 font-bold text-sm flex items-center justify-center">1</span>
+              <div>
+                <p class="font-medium text-secondary-900">Analyse de votre demande</p>
+                <p class="text-sm text-secondary-600">Votre dossier est transmis aux notaires spécialisés de votre région.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="flex-shrink-0 w-7 h-7 rounded-full bg-primary-100 text-primary-700 font-bold text-sm flex items-center justify-center">2</span>
+              <div>
+                <p class="font-medium text-secondary-900">Contact sous 48h</p>
+                <p class="text-sm text-secondary-600">Un notaire vous contacte par téléphone ou email pour discuter de votre situation.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="flex-shrink-0 w-7 h-7 rounded-full bg-primary-100 text-primary-700 font-bold text-sm flex items-center justify-center">3</span>
+              <div>
+                <p class="font-medium text-secondary-900">Devis personnalisé</p>
+                <p class="text-sm text-secondary-600">Vous recevez un devis détaillé et transparent, sans engagement de votre part.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <!-- Useful links -->
+        <div class="text-center">
+          <p class="text-secondary-600 mb-4">En attendant, consultez nos ressources :</p>
+          <div class="flex flex-wrap justify-center gap-3">
+            <a href="/succession/" class="btn-secondary text-sm">Guide Succession</a>
+            <a href="/outils/calculateur-droits-succession/" class="btn-secondary text-sm">Calculer vos droits</a>
+            <a href="/outils/simulateur-heritage/" class="btn-secondary text-sm">Simuler votre héritage</a>
+            <a href="/blog/" class="btn-secondary text-sm">Nos articles</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<!-- GA conversion tracking -->
+<script is:inline>
+  if (typeof gtag === 'function') {
+    gtag('event', 'conversion', {
+      send_to: 'G-DY6D9DZM26',
+      event_category: 'Lead',
+      event_label: 'devis_succession_completed',
+    });
+  }
+</script>

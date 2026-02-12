@@ -68,6 +68,7 @@ export const footerNavigation = {
   ressources: [
     { label: 'Blog', href: '/blog/' },
     { label: 'Outils', href: '/outils/' },
+    { label: 'Devis gratuit', href: '/devis-succession/' },
   ],
   legal: [
     { label: 'Mentions légales', href: '/mentions-legales/' },
