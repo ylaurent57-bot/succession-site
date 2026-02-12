@@ -33,12 +33,11 @@ const categories = [...new Set(sortedPosts.map((post) => post.data.category))];
           Tous
         </a>
         {categories.map((category) => (
-          <a
-            href={`/blog/categorie/${category.toLowerCase()}/`}
-            class="badge badge-secondary hover:bg-secondary-200 transition-colors"
+          <span
+            class="badge badge-secondary"
           >
             {category}
-          </a>
+          </span>
         ))}
       </div>
 

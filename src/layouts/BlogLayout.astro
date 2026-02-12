@@ -35,7 +35,7 @@ const breadcrumbs = [
   { label: 'Blog', href: '/blog/' },
 ];
 if (frontmatter.category) {
-  breadcrumbs.push({ label: frontmatter.category, href: `/blog/${frontmatter.category.toLowerCase()}/` });
+  breadcrumbs.push({ label: frontmatter.category, href: '/blog/' });
 }
 breadcrumbs.push({ label: frontmatter.title, href: Astro.url.pathname });
 
@@ -117,12 +117,11 @@ const ctaType = frontmatter.category?.toLowerCase() as 'succession' | 'heritage'
         <div class="mt-8 pt-6 border-t border-secondary-200">
           <div class="flex flex-wrap gap-2">
             {frontmatter.tags.map((tag) => (
-              <a
-                href={`/blog/tag/${tag.toLowerCase()}/`}
-                class="badge badge-secondary hover:bg-secondary-200 transition-colors"
+              <span
+                class="badge badge-secondary"
               >
                 #{tag}
-              </a>
+              </span>
             ))}
           </div>
         </div>

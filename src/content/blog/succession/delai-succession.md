@@ -175,7 +175,7 @@ Tous les notaires ne traitent pas les dossiers à la même vitesse. N'hésitez p
 - Relancer régulièrement pour connaître l'avancement du dossier
 - Répondre sans délai à chaque sollicitation du notaire
 
-Consultez notre guide sur les [frais de notaire en succession](/blog/frais-notaire-succession/) pour mieux anticiper les coûts.
+Consultez notre guide sur les [frais de notaire en succession](/blog/notaire/frais-notaire-succession/) pour mieux anticiper les coûts.
 
 ## Déblocage de fonds avant la clôture de la succession
 
@@ -222,4 +222,4 @@ Si le défunt possédait des biens dans plusieurs pays ou résidait à l'étrang
 
 Pour connaître la part d'héritage qui revient à chaque héritier, utilisez notre [simulation héritage gratuite](/outils/simulateur-heritage/). Pour estimer le montant des taxes à payer, consultez notre [calculateur de droits de succession](/outils/calculateur-droits-succession/).
 
-Si vous venez de perdre un proche et devez [ouvrir une succession](/blog/ouvrir-succession/), consultez notre guide complet sur les premières démarches à effectuer.
+Si vous venez de perdre un proche et devez [ouvrir une succession](/blog/succession/ouvrir-succession/), consultez notre guide complet sur les premières démarches à effectuer.

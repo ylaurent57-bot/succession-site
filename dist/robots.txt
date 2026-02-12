@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://succession-guide.fr/sitemap-index.xml
+Sitemap: https://succession-guide.fr/sitemap.xml
 
 # Blocage des pages admin/privées
 Disallow: /admin/
