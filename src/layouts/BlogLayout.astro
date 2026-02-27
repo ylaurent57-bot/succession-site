@@ -24,9 +24,10 @@ interface Props {
   };
   headings: { depth: number; slug: string; text: string }[];
   rawContent?: () => string;
+  relatedArticles?: { title: string; description: string; href: string; category?: string }[];
 }
 
-const { frontmatter, headings, rawContent } = Astro.props;
+const { frontmatter, headings, rawContent, relatedArticles } = Astro.props;
 
 const readingTime = rawContent ? estimateReadingTime(rawContent()) : 5;
 
@@ -124,6 +125,26 @@ const ctaType = frontmatter.category?.toLowerCase() as 'succession' | 'heritage'
               </span>
             ))}
           </div>
+        </div>
+      )}
+
+      <!-- À lire aussi -->
+      {relatedArticles && relatedArticles.length > 0 && (
+        <div class="mt-8 pt-8 border-t border-secondary-200">
+          <h2 class="text-xl font-bold text-secondary-900 mb-4">À lire aussi</h2>
+          <ul class="space-y-4">
+            {relatedArticles.map((article) => (
+              <li>
+                <a
+                  href={article.href}
+                  class="font-medium text-primary-700 hover:text-primary-900 hover:underline"
+                >
+                  {article.title}
+                </a>
+                <p class="text-sm text-secondary-600 mt-1">{article.description}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 

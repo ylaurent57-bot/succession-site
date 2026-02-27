@@ -12,8 +12,40 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content, headings } = await post.render();
+
+// Articles liés : même catégorie (max 2) + cross-links prioritaires (max 2)
+const allPosts = await getCollection('blog', ({ data, slug }) =>
+  !data.draft && slug !== post.slug
+);
+
+const sameCategory = allPosts
+  .filter((p) => p.data.category === post.data.category)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 2);
+
+// Ordre de priorité pour les cross-links SEO
+const priorityOrder = ['Notaire', 'Droits', 'Succession', 'Héritage', 'Donation', 'Testament'];
+const crossLinks = allPosts
+  .filter(
+    (p) =>
+      p.data.category !== post.data.category &&
+      !sameCategory.find((s) => s.slug === p.slug)
+  )
+  .sort((a, b) => {
+    const ai = priorityOrder.indexOf(a.data.category ?? '');
+    const bi = priorityOrder.indexOf(b.data.category ?? '');
+    return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+  })
+  .slice(0, 2);
+
+const relatedArticles = [...sameCategory, ...crossLinks].slice(0, 4).map((p) => ({
+  title: p.data.title,
+  description: p.data.description,
+  href: `/blog/${p.slug}/`,
+  category: p.data.category,
+}));
 ---
 
-<BlogLayout frontmatter={post.data} headings={headings}>
+<BlogLayout frontmatter={post.data} headings={headings} relatedArticles={relatedArticles}>
   <Content />
 </BlogLayout>
