@@ -103,6 +103,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://succession-guide.fr/blog/testament/testament-olographe/</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://succession-guide.fr/blog/testament/contester-testament/</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://succession-guide.fr/a-propos/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
