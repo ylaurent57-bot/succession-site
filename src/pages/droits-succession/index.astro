@@ -17,12 +17,16 @@ const relatedArticles = allPosts
 
 const faq = [
   {
-    question: 'Qui est exonéré de droits de succession ?',
-    answer: 'Le conjoint survivant et le partenaire de PACS sont totalement exonérés de droits de succession. Les frères et sœurs peuvent l\'être sous certaines conditions (plus de 50 ans ou invalides, avoir vécu avec le défunt pendant 5 ans).',
+    question: 'Qui est exonéré de droits de succession en 2026 ?',
+    answer: 'Le conjoint survivant et le partenaire de PACS sont totalement exonérés de droits de succession. Les frères et sœurs peuvent l\'être sous trois conditions cumulatives : être célibataire, veuf ou divorcé, avoir plus de 50 ans ou être invalide, et avoir vécu avec le défunt pendant les 5 dernières années.',
+  },
+  {
+    question: 'Le barème des droits de succession a-t-il changé en 2026 ?',
+    answer: 'Non, le barème et les abattements restent inchangés en 2026. Les montants ne sont plus indexés sur l\'inflation depuis 2012, ce qui entraîne une hausse effective de la fiscalité au fil du temps. En revanche, une exonération temporaire de 100 000 € pour les dons familiaux destinés à l\'achat d\'un logement neuf ou à la rénovation énergétique est en vigueur jusqu\'au 31 décembre 2026.',
   },
   {
     question: 'Comment payer les droits de succession si je n\'ai pas les liquidités ?',
-    answer: 'Vous pouvez demander un paiement fractionné (sur 1 à 3 ans) ou différé (si vous héritez de la nue-propriété). Des intérêts s\'appliquent. Il est aussi possible de payer en biens (dation en paiement) dans certains cas.',
+    answer: 'En 2026, vous pouvez demander un paiement fractionné (3 versements sur 1 à 3 ans, taux d\'intérêt de 2%) ou différé (si vous héritez de la nue-propriété). La dation en paiement (œuvres d\'art, immeubles) est aussi possible sur agrément. Pour les entreprises, un différé de 5 ans suivi d\'un échelonnement sur 10 ans est prévu au taux réduit de 0,6%.',
   },
   {
     question: 'Les assurances-vie sont-elles soumises aux droits de succession ?',
@@ -30,23 +34,24 @@ const faq = [
   },
   {
     question: 'Comment réduire les droits de succession ?',
-    answer: 'Plusieurs stratégies légales existent : donations anticipées (abattements renouvelés tous les 15 ans), assurance-vie, démembrement de propriété, pacte Dutreil pour les entreprises.',
+    answer: 'Plusieurs stratégies légales existent : donations anticipées (abattements renouvelés tous les 15 ans), assurance-vie, démembrement de propriété, pacte Dutreil pour les entreprises (exonération de 75%). Jusqu\'au 31 décembre 2026, profitez aussi de l\'exonération exceptionnelle de 100 000 € pour les dons affectés à un logement neuf ou à la rénovation énergétique.',
   },
 ];
 
 const headings = [
   { depth: 2, slug: 'definition', text: 'Que sont les droits de succession ?' },
   { depth: 2, slug: 'calcul', text: 'Comment sont-ils calculés ?' },
-  { depth: 2, slug: 'abattements', text: 'Les abattements applicables' },
-  { depth: 2, slug: 'bareme', text: 'Barème des droits de succession' },
+  { depth: 2, slug: 'abattements', text: 'Les abattements applicables en 2026' },
+  { depth: 2, slug: 'bareme', text: 'Barème des droits de succession 2026' },
   { depth: 2, slug: 'exonerations', text: 'Exonérations et réductions' },
-  { depth: 2, slug: 'paiement', text: 'Payer les droits de succession' },
+  { depth: 2, slug: 'nouveautes-2026', text: 'Nouveautés 2026' },
+  { depth: 2, slug: 'paiement', text: 'Payer les droits de succession en 2026' },
 ];
 ---
 
 <PillarLayout
-  title="Droits de Succession : Calcul, Barème et Abattements 2024"
-  description="Tout savoir sur les droits de succession en France : calcul, barème fiscal, abattements par héritier. Guide complet pour comprendre et optimiser la fiscalité successorale."
+  title="Droits de Succession 2026 : Calcul, Barème et Abattements"
+  description="Droits de succession 2026 en France : barème fiscal à jour, abattements par héritier, exonération temporaire pour dons logement. Guide complet pour comprendre et optimiser la fiscalité successorale."
   category="Droits"
   headings={headings}
   relatedArticles={relatedArticles}
@@ -59,6 +64,9 @@ const headings = [
   <p>
     Le montant des droits varie considérablement selon le lien de parenté entre le défunt et l'héritier : plus le lien est proche, plus les abattements sont élevés et les taux faibles.
   </p>
+  <div class="info-box">
+    <strong>À savoir pour 2026 :</strong> Le barème et les abattements des droits de succession restent inchangés en 2026. Non indexés sur l'inflation depuis 2012, ils entraînent mécaniquement une hausse de la fiscalité pour les héritiers. Une <strong>exonération temporaire de 100 000 €</strong> pour les dons familiaux liés au logement est toutefois en vigueur jusqu'au 31 décembre 2026.
+  </div>
 
   <h2 id="calcul">Comment sont-ils calculés ?</h2>
   <p>
@@ -66,7 +74,7 @@ const headings = [
   </p>
   <ol>
     <li><strong>Évaluation de l'actif brut</strong> : Valeur de tous les biens du défunt</li>
-    <li><strong>Déduction du passif</strong> : Dettes, frais funéraires (jusqu'à 1 500 €)</li>
+    <li><strong>Déduction du passif</strong> : Dettes, frais funéraires (forfait de 1 500 € sans justificatif)</li>
     <li><strong>Détermination de l'actif net</strong> : Actif brut - Passif</li>
     <li><strong>Répartition entre héritiers</strong> : Selon la loi ou le testament</li>
     <li><strong>Application des abattements</strong> : Selon le lien de parenté</li>
@@ -74,12 +82,12 @@ const headings = [
   </ol>
 
   <div class="info-box">
-    <strong>Exemple :</strong> Un enfant hérite de 200 000 €. Après abattement de 100 000 €, la part taxable est de 100 000 €. Les droits seront d'environ 18 194 € (barème progressif).
+    <strong>Exemple de calcul :</strong> Un enfant hérite de 250 000 € de son père. Après abattement de 100 000 €, la part taxable est de 150 000 €. Les droits se calculent tranche par tranche : 8 072 × 5% = 404 € + 4 037 × 10% = 404 € + 3 823 × 15% = 573 € + 134 068 × 20% = 26 814 €. <strong>Total : 28 194 €</strong>, soit un taux effectif d'environ 11,3% sur la part héritée.
   </div>
 
-  <h2 id="abattements">Les abattements applicables</h2>
+  <h2 id="abattements">Les abattements applicables en 2026</h2>
   <p>
-    Chaque héritier bénéficie d'un abattement sur sa part, selon son lien avec le défunt :
+    Chaque héritier bénéficie d'un abattement sur sa part, selon son lien avec le défunt. Ces montants, <strong>inchangés depuis 2012</strong>, ne sont plus indexés sur l'inflation :
   </p>
 
   <table>
@@ -121,7 +129,11 @@ const headings = [
     </tbody>
   </table>
 
-  <h2 id="bareme">Barème des droits de succession</h2>
+  <div class="info-box">
+    <strong>Rappel :</strong> Les abattements se renouvellent tous les <strong>15 ans</strong>. Si le défunt vous a déjà consenti une donation il y a moins de 15 ans, l'abattement utilisé vient en déduction de celui applicable à la succession.
+  </div>
+
+  <h2 id="bareme">Barème des droits de succession 2026</h2>
 
   <h3>En ligne directe (enfants, parents)</h3>
   <table>
@@ -185,24 +197,48 @@ const headings = [
   </p>
   <ul>
     <li><strong>Conjoint et partenaire de PACS</strong> : Exonération totale</li>
-    <li><strong>Frères et sœurs</strong> : Exonération possible si plus de 50 ans ou invalides, vivant avec le défunt depuis 5 ans</li>
+    <li><strong>Frères et sœurs</strong> : Exonération si les 3 conditions sont remplies au moment du décès : être célibataire, veuf(ve) ou divorcé(e) ; avoir plus de 50 ans ou être invalide ; avoir vécu avec le défunt pendant les 5 dernières années</li>
     <li><strong>Entreprises (Pacte Dutreil)</strong> : Exonération de 75% de la valeur</li>
     <li><strong>Monuments historiques</strong> : Exonération sous conditions</li>
     <li><strong>Bois et forêts</strong> : Exonération de 75%</li>
     <li><strong>Victimes de guerre ou terrorisme</strong> : Exonération totale</li>
   </ul>
 
-  <h2 id="paiement">Payer les droits de succession</h2>
+  <h2 id="nouveautes-2026">Nouveautés 2026</h2>
+
+  <h3>Exonération temporaire de 100 000 € pour dons familiaux</h3>
   <p>
-    Les droits de succession doivent être payés lors du dépôt de la déclaration de succession, soit dans les <strong>6 mois</strong> suivant le décès.
-  </p>
-  <p>
-    Si vous ne disposez pas des liquidités suffisantes, vous pouvez demander :
+    Du <strong>15 février 2025 au 31 décembre 2026</strong>, une exonération exceptionnelle s'applique aux dons d'argent consentis en pleine propriété à un enfant, petit-enfant, arrière-petit-enfant, neveu ou nièce, à condition que les fonds soient utilisés dans les 6 mois pour :
   </p>
   <ul>
-    <li><strong>Paiement fractionné</strong> : Échelonnement sur 1 à 3 ans (avec intérêts)</li>
-    <li><strong>Paiement différé</strong> : Si vous héritez de la nue-propriété, paiement reporté au décès de l'usufruitier</li>
-    <li><strong>Dation en paiement</strong> : Payer avec des œuvres d'art, immeubles ou titres (sur agrément)</li>
+    <li><strong>L'acquisition d'un logement neuf ou en VEFA</strong> destiné à la résidence principale du bénéficiaire</li>
+    <li><strong>Des travaux de rénovation énergétique</strong> éligibles à MaPrimeRénov' sur la résidence principale</li>
+  </ul>
+  <p>
+    Cette exonération de <strong>100 000 € par donateur</strong> est cumulable avec les abattements classiques de droit commun (100 000 € parent-enfant, 31 865 € grand-parent, etc.).
+  </p>
+
+  <div class="success-box">
+    <strong>Opportunité :</strong> Un couple de parents peut ainsi transmettre jusqu'à <strong>400 000 €</strong> à chacun de ses enfants en franchise de droits (100 000 € d'abattement classique × 2 + 100 000 € d'exonération temporaire × 2), en profitant de ce dispositif avant le 31 décembre 2026.
+  </div>
+
+  <h3>Gel du barème et des abattements</h3>
+  <p>
+    Le projet de loi de finances 2026 ne modifie pas le barème des droits de succession. Les abattements et les tranches d'imposition ne sont plus indexés sur l'inflation depuis 2012. Ce <strong>gel technique</strong> produit les mêmes effets qu'une hausse d'impôt : avec la hausse des prix de l'immobilier et de l'inflation, les héritiers paient proportionnellement davantage pour transmettre le même patrimoine.
+  </p>
+
+  <h2 id="paiement">Payer les droits de succession en 2026</h2>
+  <p>
+    Les droits de succession doivent être payés lors du dépôt de la déclaration de succession, soit dans les <strong>6 mois</strong> suivant le décès (12 mois si le décès a eu lieu à l'étranger).
+  </p>
+  <p>
+    Si vous ne disposez pas des liquidités suffisantes, plusieurs options existent :
+  </p>
+  <ul>
+    <li><strong>Paiement fractionné</strong> : 3 versements égaux sur 1 à 3 ans, au taux d'intérêt de <strong>2% en 2026</strong></li>
+    <li><strong>Paiement différé</strong> : Si vous héritez de la nue-propriété ou si le conjoint opte pour un droit viager au logement, paiement reporté au décès de l'usufruitier (taux de 2%)</li>
+    <li><strong>Dation en paiement</strong> : Payer avec des œuvres d'art, immeubles ou titres (sur agrément du ministère)</li>
+    <li><strong>Transmission d'entreprise</strong> : Différé de 5 ans puis échelonnement sur 10 ans (21 versements semestriels), au <strong>taux réduit de 0,6%</strong></li>
   </ul>
 
   <div class="success-box">
