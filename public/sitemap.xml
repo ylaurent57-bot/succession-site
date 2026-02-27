@@ -157,6 +157,36 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://succession-guide.fr/blog/testament/donation-dernier-vivant/</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://succession-guide.fr/blog/heritage/succession-famille-recomposee/</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://succession-guide.fr/blog/heritage/droits-concubin-deces/</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://succession-guide.fr/blog/succession/vente-maison-succession/</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://succession-guide.fr/blog/droits/reduire-droits-succession/</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://succession-guide.fr/a-propos/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
