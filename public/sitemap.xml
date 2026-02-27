@@ -92,6 +92,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://succession-guide.fr/blog/notaire/succession-sans-notaire/</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://succession-guide.fr/devis-succession/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
